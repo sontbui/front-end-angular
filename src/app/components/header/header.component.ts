@@ -8,6 +8,7 @@ import { UserResponse } from '../../responses/user/user.response';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';  
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -24,18 +25,23 @@ export class HeaderComponent implements OnInit{
   userResponse?:UserResponse | null;
   isPopoverOpen = false;
   activeNavItem: number = 0;
+  cartItemCount:number = 0;
   // cartItemCount: number = 0;
   
 
   constructor(
     private userService: UserService,       
     private tokenService: TokenService,    
+    private cartService: CartService,
     private router: Router,
   ) {
     
    }
   ngOnInit() {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();  
+    this.cartService.cartItemCount$.subscribe((count) => {
+      this.cartItemCount = count;
+    });
     
   }
   // const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
