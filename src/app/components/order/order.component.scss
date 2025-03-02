@@ -1,0 +1,186 @@
+@import '../../styles/shared-styles.scss';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+.container {
+    color: rgb(4, 4, 4);
+    font-family: 'Lato', sans-serif; 
+    margin-bottom: 20px;
+}
+.intro-section {
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+.product-header{
+    color: black;
+}
+.orderBTN{
+    background-color: black;
+    border-radius: 15px;
+    width: 100%;
+}
+.form-control {
+    background-color: white;
+    border: 1px solid rgb(29, 33, 54);
+    color: rgb(7, 7, 7);
+}
+
+.form-control:focus {
+    border-color: white;
+    background-color: rgb(199, 199, 199);
+    color: rgb(0, 0, 0);
+}
+.form-label {
+    color: rgba(0, 0, 0, 0.758);
+}
+
+.product-order {
+    color: rgb(14, 13, 13);
+}
+table {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    border-collapse: separate;
+    border: 1px solid rgb(0, 0, 0);
+    border-spacing: 0;
+    background-color: rgb(250, 250, 250); 
+    color: black;   
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+}
+.product-info {
+    display: flex;
+    align-items: center;
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.product-name {
+    max-width: 200px; /* Đặt chiều rộng tối đa của tên sản phẩm */
+    white-space: nowrap; /* Ngăn tên sản phẩm quá dài bị xuống dòng */
+    overflow: hidden; /* Ẩn phần dư thừa của tên sản phẩm khi nó quá dài */
+    text-overflow: ellipsis; /* Hiển thị dấu chấm (...) khi tên sản phẩm bị cắt */
+    text-align: center;
+}
+
+.btn-gradient {
+    background: linear-gradient(to right, $shopapp-tint-color, $shopapp-color);
+    color: white;
+    border-radius: 30px;
+    width: 200px;
+}
+
+.border-wrapper {
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.product-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10px;
+    border-color: black;
+}
+
+.product-quantity button {
+    background-color: transparent;
+    border: none;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.product-quantity input {
+    background-color: black;
+    border: none;
+    color: rgb(3, 3, 3);
+    font-size: 16px;
+    text-align: center;
+    width: 40px;
+    margin: 0 10px;
+}
+
+.product-quantity input:focus {
+    outline: none;
+}
+.btn{
+    background-color: rgb(208, 208, 208);
+    border-color: rgb(109, 109, 109);
+    color: rgba(0, 0, 0, 0.8);
+    &:hover{
+        background: white;
+    }
+}
+.btn .btn-gradient{
+    background-color: rgb(208, 208, 208);
+    border-color: rgb(109, 109, 109);
+}
+// .btn-de-in{
+//      background-color: rgb(208, 208, 208);
+//     border-color: rgb(109, 109, 109);
+//     color: rgba(0, 0, 0, 0.8);
+//     &:hover{
+//         background: white;
+//     }
+// }
+.price-original{
+    color: black;
+}
+.price-after{
+    color: red;
+}
+.col-md-7{
+
+}
+/* Đặt chiều cao tối đa cho bảng sản phẩm và tạo thanh cuộn nếu cần */
+.product-table-wrapper {
+    max-height: 400px; /* Điều chỉnh chiều cao tối đa theo nhu cầu */
+    overflow-y: auto; /* Tạo thanh cuộn dọc nếu nội dung vượt quá chiều cao */
+    border-color: black;
+    border-width: 2px;
+}
+
+/* Thiết lập một margin-bottom để tránh tràn nội dung ra ngoài */
+.product-table {
+    margin-bottom: 15px;
+}
+
+hr{
+    color: black;
+    width: 100%;
+    height: 20px;
+    
+}
+
+
+.coupon-and-price-container {
+    display: flex; /* Sử dụng Flexbox để căn chỉnh các phần tử theo hàng ngang */
+    align-items: center; /* Căn giữa các phần tử theo trục dọc */
+    white-space: nowrap; 
+}
+
+
+.total-price {
+    margin-left: 0px; /* Di chuyển phần tử "Total price" sang phải cùng cấp với phần tử "Enter coupon" */
+}
+
+.form-controls{
+    background-color: white;
+    border: 1px solid rgb(29, 33, 54);
+    color: rgb(7, 7, 7);
+    border-radius: 10px;
+}
+.apply {
+    background-color: blue; /* Đặt màu nền của nút */
+    color: white; /* Đặt màu chữ của nút */
+}

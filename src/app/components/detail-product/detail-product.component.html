@@ -1,0 +1,78 @@
+<app-header></app-header>
+<div class="container">
+    <div class="intro-section">
+
+    </div>
+    <div class="row">
+      <div class="col-md-6 product-frame">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            @for(image of product?.product_images;
+                track image.image_url;let i = $index;) {
+              <div
+                 class="carousel-item"
+                  [ngClass]="{'active': i === currentImageIndex}">
+                <div class="square-image">
+                  <img [src]="image.image_url" class="product-image" alt="Product Image">
+                </div>
+              </div>
+            }
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                  data-bs-slide="prev" (click)="previousImage()">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                  data-bs-slide="next" (click)="nextImage()">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <div class="row">
+          <div class="thumbnail-container">
+            @for(image of product?.product_images;
+                 track image.image_url; let i = $index) {
+                  <div
+                    class="thumbnail-item"
+                    [ngClass]="{'active': i === currentImageIndex}"
+                    (click)="thumbnailClick(i)">
+                  <img [src]="image.image_url" class="thumbnail-image" alt="Thumbnail Image">
+                </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="product-details">
+          <h1 class="product-name">{{ product?.name }}</h1>
+          <p class="product-description">{{ product?.description }}</p>
+          <p class="product-price ">
+            <del class="product-price-origin">${{ product?.price }}</del>
+            <span class="arrow">→</span>
+            ${{ productAfter }}
+
+          </p>
+          <p class="product-total">Total: ${{ getTotalPrice() | number:'1.2-2' }}</p>
+
+          <div class="product-quantity">
+            Quantity:
+            <div class="border-wrapper">
+              <button (click)="decreaseQuantity()" id="decreaseIndex">-</button>
+              <input type="text" id="inputNumber" [value]="quantity" (input)="updateQuantity($event)">
+              <button (click)="increaseQuantity()" id="increaseIndex">+</button>
+            </div>
+          </div>
+
+          <div *ngIf="showAlert" class="alert">Quantity cannot be 0!</div>
+
+          <div class="product-actions">
+            <button class="btn btn-primary" (click)="addToCart()" *ngIf="quantity !== 0">Add to cart</button>
+            <button class="btn btn-success" (click)="buyNow()" *ngIf="quantity !== 0" >Buy now</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</div>
+<app-footer></app-footer>

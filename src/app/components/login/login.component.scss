@@ -1,0 +1,119 @@
+@import '../../styles/shared-styles.scss';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+.container {
+    color: white;
+    height: 100vh;
+    font-family: 'Lato', sans-serif;   
+}
+.login-form {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 500px;
+    border: 1px solid rgb(0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+.login-header {
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+}
+.form-control {
+    background-color: rgba(165, 164, 164, 0.621);
+    border: 1px black;
+    color: rgb(0, 0, 0);
+}
+.form-control:focus {
+    color: rgb(0, 0, 0);
+    background-color: whitesmoke;
+    outline: none;
+    border-color: black;    
+}
+  
+.divider-nospace {
+    border-top: 1px solid white;
+}
+
+.password-field {
+    position: relative;
+}
+.password-toggle {
+    position: absolute;
+    top: 65%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: black;
+    cursor: pointer;
+}
+.checkbox-text {
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+/* Màu checkbox khi được chọn */
+.checkbox-text input[type="checkbox"]:checked {
+    border-color: white;
+    background-color: rgba(0, 0, 0, 0.633);
+}
+
+.form-check-input {
+    margin-right: 5px;
+}
+
+.register-link {
+    color: green;
+    text-decoration: none;
+}
+.access-right {
+    margin-top: 20px;
+    width: 200px;
+    color: rgb(16, 16, 16);
+    text-align: center;
+    background-color: rgb(255, 255, 255) !important;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.access-right:focus {
+    border: 1px solid green;
+}
+
+.form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(243, 165, 42, 0.4);
+    opacity: 1;
+    /* Firefox */
+}
+
+.form-control:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgba(243, 165, 42, 0.4);
+}
+
+.form-control::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: rgba(243, 165, 42, 0.4);
+}
+
+.login-button {
+    background: black;
+    color: white;
+    border-radius: 30px;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    border: none;
+    &:hover{
+        background-color: gray;
+    }
+}
+.divider {
+    height: 1px;
+    background-color: rgb(243, 165, 42);
+    /* background-color: rgb(105, 244, 181) */
+    margin: 20px;
+}

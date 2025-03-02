@@ -1,0 +1,156 @@
+<app-header></app-header>
+<div class="container">
+    <div class="intro-section">
+    </div>
+    <form [formGroup]="orderForm"> <!-- Thêm form và gán formGroup -->
+        <div class="row">
+            <div class="col-md-5">
+                <h2 class="product-headers">Information Delivery</h2>
+                <div class="mb-3">
+                    <label for="fullname" class="form-label">Fullname</label>
+                    <input type="text" formControlName="fullname" placeholder="Your name" class="form-control"
+                        id="fullname"
+                        [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
+                    @if(orderForm.get('fullname')!.invalid &&
+                    orderForm.get('fullname')!.touched) {
+                    <div class="invalid-feedback">
+                        {{ orderForm.get('fullname')!.hasError('required') ? 'Name is required !!' : 'Name have leat 2 characters !' }}
+                        
+                    </div>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" formControlName="email" placeholder="Emails" class="form-control" id="email"
+                        [class.is-invalid]="orderForm.get('email')!.invalid && orderForm.get('email')!.touched">
+                    @if(orderForm.get('email')!.invalid
+                    && orderForm.get('email')!.touched) {
+                    <div class="invalid-feedback">
+                        {{ orderForm.get('email')!.hasError('email') ? 'Email is invalid' : 'Email is required' }}
+                    </div>
+                    }
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone number</label>
+                    <input type="text" class="form-control" formControlName="phone_number" placeholder="Phone number"
+                        required id="phone"
+                        [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
+                    @if(orderForm.get('phone_number')!.invalid
+                    && orderForm.get('phone_number')!.touched) {
+                    <div class="invalid-feedback">
+                        {{ orderForm.get('phone_number')!.hasError('required') ? 'Phone number is required' :
+                        orderForm.get('phone_number')!.hasError('pattern') ? 'Phone number is invalid' :
+                        orderForm.get('phone_number')!.hasError('minlength') ? 'Phone number must be at least 10 digits long' :
+                        orderForm.get('phone_number')!.hasError('maxlength') ? 'Phone number cannot be more than 11 digits long' : '' }}
+
+                    </div>
+                    }
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" formControlName="address" placeholder="Address" required
+                        id="address"
+                        [class.is-invalid]="orderForm.get('address')!.invalid && orderForm.get('address')!.touched">
+                    @if(orderForm.get('address')!.invalid
+                    && orderForm.get('address')!.touched) {
+                    <div class="invalid-feedback">
+                        Address is required and contain leastest 5 digit long.
+                    </div>
+                    }
+
+                </div>
+                <div class="mb-3">
+                    <label for="note" class="form-label">Note</label>
+                    <input type="text" class="form-control" formControlName="note" placeholder="Notes" required
+                        id="note">
+                </div>
+                <div class="mb-3">
+                    <label for="shippingMethod">Delivery methods</label>
+                    <select class="form-control" id="shippingMethod" formControlName="shipping_method">
+                        <option value="express">Express</option>
+                        <option value="normal">Normal</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="paymentMethod">Payment methods</label>
+                    <select class="form-control" id="paymentMethod" formControlName="payment_method">
+                        <option value="cod">Cast on delivery </option>
+                        <option value="other">Diffirent methods</option>
+                    </select>
+                </div>
+                <!-- </form> -->
+            </div>
+            <div class="col-md-7">
+                <h2 class="product-order">Product in cart</h2>
+                <div class="product-table-wrapper">
+                    <table class="product-table">
+                        <tbody>
+                            <ng-container *ngFor="let item of cartItems; let i = index">
+                                <tr>
+                                    <td colspan="6">
+                                        <hr class="hr-long">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="product-name">{{ item.product.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-info">
+                                            <img [src]="item.product.thumbnail" alt="Product Image"
+                                                class="product-image">
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="product-quantity">
+                                            <div class="border-wrapper">
+                                                <button class="btn-de-in" (click)="decreaseQuantity(i)">-</button>
+                                                {{ item.quantity }}
+                                                <button id="increaseBtn" (click)="increaseQuantity(i)">+</button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td><del class="price-original">{{ (item.product.price ) | number:'1.2-2' }}</del>
+                                    </td>
+                                    <td><span class="arrow">→</span></td>
+                                    <td class="price-after">{{ ((item.product.price * 0.95 ) * item.quantity) |
+                                        number:'1.2-2' }}</td>
+                                    <td>
+                                        <button class="btn btn-danger" (click)="confirmDelete(i)">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="text-start mt-3 coupon-and-price-container">
+                    <!--                    <div class="input-group">-->
+                    <!--                        <input type="text" class="form-controls coupon" formControlName="couponCode" placeholder="Enter coupon">-->
+                    <!--                        <button (click)="applyCoupon()" class="btn btn-light" type="button">Apply</button>-->
+                    <!--                    </div>-->
+                    <h4 class="header-text text-end   total-price">Total price: ${{ totalAmount | number:'1.2-2'}} </h4>
+                </div>
+
+                @if(!isFormValid()){
+                
+                <div class="text-start mt-3" *ngIf="cartItems.length > 0">
+                    <button  class="btn  orderBTN" type="button" [disabled]="!isFormValid()">Please fill full and valid information form !!!</button>
+                </div>
+                }
+                @else {
+                    <div class="text-start mt-3">
+                        <button (click)="placeOrder()" class="btn orderBTN" type="submit" [disabled]="!isFormValid()">Order</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

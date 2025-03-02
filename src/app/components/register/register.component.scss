@@ -1,0 +1,134 @@
+@import '../../styles/shared-styles.scss';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+
+.container {
+    color: white;
+    height: 100vh;    
+    margin-bottom: 100px;
+    font-family: 'Lato', sans-serif; 
+    margin-top: 20px;
+}
+
+
+.register-form {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 500px;
+    border: 1px solid rgb(0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.register-header {
+    text-align: center;
+    /*      color: rgb(233, 66, 178);*/
+    color: black;
+    margin-bottom: 20px;
+
+}
+
+.label-text {
+    color: rgb(0, 0, 0);
+}
+
+.form-control {
+    background-color: rgb(214, 214, 214);
+    border: black;
+    color: rgb(0, 0, 0);
+    text-align: left;
+}
+
+.form-control:focus {
+    color: rgb(0, 0, 0);
+    background-color: rgb(214, 214, 214);
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
+    padding-left: 0;
+}
+
+.password-field {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: black;
+    cursor: pointer;
+}
+
+.checkbox-text {
+    color: rgb(19, 19, 19);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Màu checkbox khi được chọn */
+.checkbox-text input[type="checkbox"]:checked {
+    border-color: white;
+    background-color: gray;
+}
+
+.form-check-input {
+    margin-right: 5px;
+}
+
+.register-link {
+    color: black;
+    text-decoration: none;
+    background-color: white;
+}
+
+.register-button {
+    background: black;
+    color: white;
+    border-radius: 30px;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    border: none;
+    &:hover{
+        background: rgba(0, 0, 0, 0.919);
+        box-shadow: 0 0 5px rgb(212, 210, 210);
+    }
+}
+
+.divider {
+    height: 1px;
+    background-color: rgb(0, 0, 0);
+    /*      background-color: rgb(105, 244, 181)*/
+    margin: 20px;
+}
+
+.divider-nospace {
+    border-top: 1px solid white;
+}
+
+.form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(0, 0, 0, 0.4);
+    opacity: 1;
+    /* Firefox */
+}
+
+.form-control:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgba(243, 165, 42, 0.4);
+}
+
+.form-control::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: rgba(243, 165, 42, 0.4);
+}
+
+form{
+    background-color: white;
+}
