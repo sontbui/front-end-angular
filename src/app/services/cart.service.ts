@@ -68,5 +68,6 @@ export class CartService {
   clearCart(): void {
     this.cart.clear(); 
     this.saveCartToLocalStorage(); 
+    this.updateCartCount();
   }
 }

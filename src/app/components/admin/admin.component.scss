@@ -13,8 +13,13 @@
     text-align: center;
     /* Center-align text in the header */
 }
+.logout{
+    background-color: rgb(213, 212, 212);
+    border-color: transparent;
+    color: black;
+}
 #sidebar {
-    background-color: #007bff !important; /* Primary color */
+   
     color: white; /* Text color */
     height: 100vh;
     overflow-y: auto; /* Add scrollbars if content overflows */

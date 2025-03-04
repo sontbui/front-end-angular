@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit{
       this.router.navigate(['/orders/user'], { queryParams: { id: this.userResponse?.id } });
     }
     else if (index === 2) {
+      this.cartService.clearCart();
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();    

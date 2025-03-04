@@ -27,7 +27,7 @@
                             (click)="setActiveNavItem(1)"
                             routerLink="/orders">
                             <i class="fas fa-shopping-cart icon"></i>
-                            Cart ({{ cartItemCount }})
+                            Cart <span *ngIf="cartItemCount >0"> ({{ cartItemCount }}) </span>
                         </a>
                     </li>
 

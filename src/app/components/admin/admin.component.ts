@@ -28,6 +28,7 @@ import { inject } from '@angular/core';
 export class AdminComponent implements OnInit {
   //adminComponent: string = 'orders';
   userResponse?:UserResponse | null;
+  lastName: string = '';
   private userService = inject(UserService);
   private tokenService = inject(TokenService);
   private router = inject(Router);
@@ -35,6 +36,10 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();    
     // Default router
+    if(this.userResponse?.fullname){
+      const names = this.userResponse.fullname.split(' ');
+      this.lastName = names[names.length - 1];
+    }
     debugger
     if (this.router.url === '/admin') {
       this.router.navigate(['/admin/orders']);

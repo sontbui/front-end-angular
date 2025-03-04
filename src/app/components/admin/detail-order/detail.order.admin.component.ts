@@ -81,7 +81,7 @@ export class DetailOrderAdminComponent implements OnInit{
           .map((order_detail:any) => {
           order_detail.product.thumbnail = `${environment.apiBaseUrl}/products/images/${order_detail.product.thumbnail}`;
           order_detail.number_of_products = order_detail.numberOfProducts
-          //order_detail.total_money = order_detail.totalMoney
+          //order_detail.total_money = order_detail.ney
           return order_detail;
         });        
         this.orderResponse.payment_method = response.payment_method;
