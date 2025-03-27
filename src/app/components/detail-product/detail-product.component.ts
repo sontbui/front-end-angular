@@ -46,21 +46,17 @@ export class DetailProductComponent implements OnInit {
   ) {
 
   }
-  ngOnInit() {
-
-    // Lấy productId từ URL      
+  ngOnInit() {  
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
 
     debugger
     //this.cartService.clearCart();
-    //const idParam = 9 //fake tạm 1 giá trị
     if (idParam !== null) {
       this.productId = +idParam;
     }
     if (!isNaN(this.productId)) {
       this.productService.getDetailProduct(this.productId).subscribe({
         next: (apiResponse: ApiResponse) => {
-          // take list prdc and picture of pr
           const response = apiResponse.data
           debugger
           if (response.product_images && response.product_images.length > 0) {

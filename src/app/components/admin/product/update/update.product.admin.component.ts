@@ -110,21 +110,18 @@ export class UpdateProductAdminComponent implements OnInit {
   showImage(index: number): void {
     debugger
     if (this.product && this.product.product_images && 
-        this.product.product_images.length > 0) {
-      // Đảm bảo index nằm trong khoảng hợp lệ        
+        this.product.product_images.length > 0) {     
       if (index < 0) {
         index = 0;
       } else if (index >= this.product.product_images.length) {
         index = this.product.product_images.length - 1;
       }        
-      // Gán index hiện tại và cập nhật ảnh hiển thị
       this.currentImageIndex = index;
     }
   }
   thumbnailClick(index: number) {
     debugger
-    // Gọi khi một thumbnail được bấm
-    this.currentImageIndex = index; // Cập nhật currentImageIndex
+    this.currentImageIndex = index; 
   }  
   nextImage(): void {
     debugger

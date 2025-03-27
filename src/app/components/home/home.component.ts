@@ -123,10 +123,8 @@ export class HomeComponent implements OnInit {
         .map((_, index) => startPage + index);
     }
     
-    // Hàm xử lý sự kiện khi sản phẩm được bấm vào
     onProductClick(productId: number) {
       debugger;
-      // Điều hướng đến trang detail-product với productId là tham số
       this.router.navigate(['/products', productId]);
     }
 }

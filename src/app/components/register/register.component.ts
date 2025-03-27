@@ -25,7 +25,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 export class RegisterComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   @ViewChild('registerForm') registerForm!: NgForm;
-  // Khai báo các biến tương ứng với các trường dữ liệu trong form
   phoneNumber: string;
   password: string;
   retypePassword: string;

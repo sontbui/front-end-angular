@@ -48,11 +48,8 @@ export class CategoryAdminComponent implements OnInit {
     }
     insertCategory() {
       debugger
-      // Điều hướng đến trang detail-category với categoryId là tham số
       this.router.navigate(['/admin/categories/insert']);
     } 
-
-    // Hàm xử lý sự kiện khi sản phẩm được bấm vào
     updateCategory(categoryId: number) {
       debugger      
       this.router.navigate(['/admin/categories/update', categoryId]);

@@ -92,17 +92,12 @@ export class UserAdminComponent implements OnInit{
         .map((_, index) => startPage + index);
     }
     
-    // Hàm xử lý sự kiện khi thêm mới sản phẩm
     insertUser() {
       debugger
-      // Điều hướng đến trang detail-user với userId là tham số
       this.router.navigate(['/admin/users/insert']);
     } 
-
-    // Hàm xử lý sự kiện khi sản phẩm được bấm vào
     updateUser(userId: number) {
       debugger
-      // Điều hướng đến trang detail-user với userId là tham số
       this.router.navigate(['/admin/users/update', userId]);
     }  
     resetPassword(userId: number) {
