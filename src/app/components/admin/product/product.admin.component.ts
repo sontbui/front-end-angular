@@ -101,18 +101,17 @@ export class ProductAdminComponent implements OnInit {
       return new Array(endPage - startPage + 1).fill(0)
         .map((_, index) => startPage + index);
     }
-    
-    // Hàm xử lý sự kiện khi thêm mới sản phẩm
+
     insertProduct() {
       debugger
-      // Điều hướng đến trang detail-product với productId là tham số
+
       this.router.navigate(['/admin/products/insert']);
     } 
 
-    // Hàm xử lý sự kiện khi sản phẩm được bấm vào
+
     updateProduct(productId: number) {
       debugger
-      // Điều hướng đến trang detail-product với productId là tham số
+
       this.router.navigate(['/admin/products/update', productId]);
     }  
     deleteProduct(product: Product) {      

@@ -51,9 +51,9 @@ export class LoginComponent implements OnInit{
   password: string = '';
   showPassword: boolean = false;
 
-  roles: Role[] = []; // Mảng roles
+  roles: Role[] = []; 
   rememberMe: boolean = true;
-  selectedRole: Role | undefined; // Biến để lưu giá trị được chọn từ dropdown
+  selectedRole: Role | undefined; 
   userResponse?: UserResponse
 
   onPhoneNumberChange() {
@@ -70,10 +70,9 @@ export class LoginComponent implements OnInit{
   ) { }
 
   ngOnInit() {
-    // Gọi API lấy danh sách roles và lưu vào biến roles
     debugger
     this.roleService.getRoles().subscribe({
-      next: (apiResponse: ApiResponse) => { // Sử dụng kiểu Role[]
+      next: (apiResponse: ApiResponse) => {
         debugger
         const roles = apiResponse.data
         this.roles = roles;
@@ -90,7 +89,6 @@ export class LoginComponent implements OnInit{
   }
   createAccount() {
     debugger
-    // Chuyển hướng người dùng đến trang đăng ký (hoặc trang tạo tài khoản)
     this.router.navigate(['/register']);
   }
   login() {

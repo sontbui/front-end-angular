@@ -28,7 +28,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 export class DetailOrderAdminComponent implements OnInit{    
   orderId:number = 0;
   orderResponse: OrderResponse = {
-    id: 0, // Hoặc bất kỳ giá trị số nào bạn muốn
+    id: 0,  
     user_id: 0,
     fullname: '',
     phone_number: '',

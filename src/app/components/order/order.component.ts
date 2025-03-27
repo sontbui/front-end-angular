@@ -206,7 +206,6 @@ export class OrderComponent implements OnInit {
       this.calculateTotal();
     }
   }
-  // Hàm xử lý việc áp dụng mã giảm giá
   applyCoupon(): void {
     debugger
     const couponCode = this.orderForm.get('couponCode')!.value;

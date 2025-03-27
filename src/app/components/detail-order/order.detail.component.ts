@@ -27,7 +27,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 })
 export class OrderDetailComponent implements OnInit {  
   orderResponse: OrderResponse = {
-    id: 0, // Hoặc bất kỳ giá trị số nào bạn muốn
+    id: 0, 
     user_id: 0,
     fullname: '',
     phone_number: '',
@@ -36,12 +36,12 @@ export class OrderDetailComponent implements OnInit {
     note: '',
     order_date: new Date(),
     status: '',
-    total_money: 0, // Hoặc bất kỳ giá trị số nào bạn muốn
+    total_money: 0,
     shipping_method: '',
     shipping_address: '',
     shipping_date: new Date(),
     payment_method: '',
-    order_details: [] // Một mảng rỗng
+    order_details: [] 
   };  
   constructor(
     private orderService: OrderService,
@@ -52,7 +52,7 @@ export class OrderDetailComponent implements OnInit {
     this.getOrderDetails();
   }
   trackByFn(index: number, item: any): any {
-    return item.id; // Sử dụng một trường duy nhất trong item như ID
+    return item.id; 
 }
   getOrderDetails(): void {
     debugger

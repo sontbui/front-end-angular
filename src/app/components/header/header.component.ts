@@ -43,10 +43,7 @@ export class HeaderComponent implements OnInit{
       this.cartItemCount = count;
     });
     
-  }
-  // const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-  // // Đếm số lượng sản phẩm trong giỏ hàng
-  // this.cartItemCount = cartItems.length;   
+  } 
 
   togglePopover(event: Event): void {
     event.preventDefault();
