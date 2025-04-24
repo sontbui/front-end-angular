@@ -2,7 +2,7 @@
 <div class="container">
     <div class="intro-section">
     </div>
-    <form [formGroup]="orderForm"> <!-- Thêm form và gán formGroup -->
+    <form [formGroup]="orderForm">
         <div class="row">
             <div class="col-md-5">
                 <h2 class="product-headers">Information Delivery</h2>
@@ -15,7 +15,6 @@
                     orderForm.get('fullname')!.touched) {
                     <div class="invalid-feedback">
                         {{ orderForm.get('fullname')!.hasError('required') ? 'Name is required !!' : 'Name have leat 2 characters !' }}
-                        
                     </div>
                     }
                 </div>
@@ -29,9 +28,7 @@
                         {{ orderForm.get('email')!.hasError('email') ? 'Email is invalid' : 'Email is required' }}
                     </div>
                     }
-
                 </div>
-
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone number</label>
                     <input type="text" class="form-control" formControlName="phone_number" placeholder="Phone number"
@@ -44,7 +41,6 @@
                         orderForm.get('phone_number')!.hasError('pattern') ? 'Phone number is invalid' :
                         orderForm.get('phone_number')!.hasError('minlength') ? 'Phone number must be at least 10 digits long' :
                         orderForm.get('phone_number')!.hasError('maxlength') ? 'Phone number cannot be more than 11 digits long' : '' }}
-
                     </div>
                     }
                 </div>
@@ -59,7 +55,6 @@
                         Address is required and contain leastest 5 digit long.
                     </div>
                     }
-
                 </div>
                 <div class="mb-3">
                     <label for="note" class="form-label">Note</label>
@@ -76,11 +71,11 @@
                 <div class="mb-3">
                     <label for="paymentMethod">Payment methods</label>
                     <select class="form-control" id="paymentMethod" formControlName="payment_method">
-                        <option value="cod">Cast on delivery </option>
-                        <option value="other">Diffirent methods</option>
+                        <option value="cod">Cash on Delivery</option>
+                        <option value="vnpay">VNPay</option>
+                        <option value="other">Different methods</option>
                     </select>
                 </div>
-                <!-- </form> -->
             </div>
             <div class="col-md-7">
                 <h2 class="product-order">Product in cart</h2>
@@ -101,7 +96,6 @@
                                         <div class="product-info">
                                             <img [src]="item.product.thumbnail" alt="Product Image"
                                                 class="product-image">
-
                                         </div>
                                     </td>
                                     <td>
@@ -113,7 +107,6 @@
                                             </div>
                                         </div>
                                     </td>
-
                                     <td><del class="price-original">{{ (item.product.price ) | number:'1.2-2' }}</del>
                                     </td>
                                     <td><span class="arrow">→</span></td>
@@ -127,21 +120,14 @@
                                 </tr>
                             </ng-container>
                         </tbody>
-
                     </table>
                 </div>
                 <div class="text-start mt-3 coupon-and-price-container">
-                    <!--                    <div class="input-group">-->
-                    <!--                        <input type="text" class="form-controls coupon" formControlName="couponCode" placeholder="Enter coupon">-->
-                    <!--                        <button (click)="applyCoupon()" class="btn btn-light" type="button">Apply</button>-->
-                    <!--                    </div>-->
-                    <h4 class="header-text text-end   total-price">Total price: ${{ totalAmount | number:'1.2-2'}} </h4>
+                    <h4 class="header-text text-end total-price">Total price: ${{ totalAmount | number:'1.2-2'}} </h4>
                 </div>
-
                 @if(!isFormValid()){
-                
                 <div class="text-start mt-3" *ngIf="cartItems.length > 0">
-                    <button  class="btn  orderBTN" type="button" [disabled]="!isFormValid()">Please fill full and valid information form !!!</button>
+                    <button class="btn orderBTN" type="button" [disabled]="!isFormValid()">Please fill full and valid information form !!!</button>
                 </div>
                 }
                 @else {

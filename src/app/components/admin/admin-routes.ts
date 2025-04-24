@@ -11,6 +11,7 @@ import { InsertProductAdminComponent } from "./product/insert/insert.product.adm
 import { InsertCategoryAdminComponent } from "./category/insert/insert.category.admin.component";
 import { UpdateCategoryAdminComponent } from "./category/update/update.category.admin.component";
 import { UserAdminComponent } from "./user/user.admin.component";
+import { ChatAdminComponent } from "./chat-admin/chat.admin.component";
 
 export const adminRoutes: Routes = [
     {
@@ -55,6 +56,10 @@ export const adminRoutes: Routes = [
                 path: 'users',
                 component: UserAdminComponent
             },  
+            {
+                path: 'chat-admin',
+                component: ChatAdminComponent
+            }, 
         ]
     }
 ];

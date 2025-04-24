@@ -66,13 +66,49 @@
 
           <div *ngIf="showAlert" class="alert">Quantity cannot be 0!</div>
 
+        
           <div class="product-actions">
             <button class="btn btn-primary" (click)="addToCart()" *ngIf="quantity !== 0">Add to cart</button>
-            <button class="btn btn-success" (click)="buyNow()" *ngIf="quantity !== 0" >Buy now</button>
-          </div>
-
+            <button class="btn btn-success" (click)="buyNow()" *ngIf="quantity !== 0">Buy now</button>
+            <button class="btn btn-info" (click)="openCompareDialog()">Compare</button>
         </div>
+        </div>
+        
       </div>
     </div>
+    <div class="compare-dialog" *ngIf="showCompareDialog">
+      <div class="compare-dialog-content">
+          <button class="close-btn" (click)="closeCompareDialog()">×</button>
+          <div class="compare-container">
+              <!-- Cột trái: Sản phẩm hiện tại -->
+              <div class="compare-column">
+                  <h3>Current Product</h3>
+                  <div class="product-info">
+                      <img [src]="product?.product_images[0]?.image_url" alt="{{product?.name}}" class="compare-image">
+                      <h4>{{product?.name}}</h4>
+                      <p>Price: ${{product?.price}}</p>
+                      <p>{{product?.description}}</p>
+                  </div>
+              </div>
+
+              <div class="compare-column">
+                  <h3>Compare With</h3>
+                  <div class="product-list" *ngIf="!selectedCompareProduct">
+                      <div class="product-item" *ngFor="let prod of productsToCompare" (click)="selectProductToCompare(prod)">
+                          <img [src]="urlImg + prod.product_images[0]?.image_url" alt="{{prod.name}}" class="thumbnail">
+                          <p>{{prod.name}}</p>
+                      </div>
+                  </div>
+                  <div class="product-info" *ngIf="selectedCompareProduct">
+                      <img [src]="selectedCompareProduct.product_images[0]?.image_url" alt="{{selectedCompareProduct.name}}" class="compare-image" >
+                      <h4>{{selectedCompareProduct.name}}</h4>
+                      <p>Price: ${{selectedCompareProduct.price}}</p>
+                      <p>{{selectedCompareProduct.description}}</p>
+                      <button class="btn btn-secondary" (click)="onProductClick(selectedCompareProduct.id)">View Product</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 <app-footer></app-footer>

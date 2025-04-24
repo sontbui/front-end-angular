@@ -9,7 +9,6 @@ import { OrderDTO } from '../../dtos/order/order.dto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Order } from '../../models/order';
-
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CommonModule } from '@angular/common';
@@ -17,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { inject } from '@angular/core';
 import { CouponService } from '../../services/coupon.service';
 import { ApiResponse } from '../../responses/api.response';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-order',
@@ -32,7 +31,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
     ReactiveFormsModule,
   ]
 })
-
 export class OrderComponent implements OnInit {
   private couponService = inject(CouponService);
   private cartService = inject(CartService);
@@ -41,6 +39,7 @@ export class OrderComponent implements OnInit {
   private tokenService = inject(TokenService);
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private http = inject(HttpClient);
 
   orderForm: FormGroup;
   cartItems: { product: Product, quantity: number }[] = [];
@@ -64,7 +63,6 @@ export class OrderComponent implements OnInit {
   };
 
   constructor() {
-
     this.orderForm = this.formBuilder.group({
       fullname: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.email]],
@@ -78,25 +76,17 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger
-    //this.cartService.clearCart();
     this.orderData.user_id = this.tokenService.getUserId();
-
-    debugger
     this.cart = this.cartService.getCart();
     const productIds = Array.from(this.cart.keys());
 
-
-    debugger
     if (productIds.length === 0) {
       return;
     }
     this.productService.getProductsByIds(productIds).subscribe({
       next: (apiResponse: ApiResponse) => {
-        debugger
-        const products: Product[] = apiResponse.data
+        const products: Product[] = apiResponse.data;
         this.cartItems = productIds.map((productId) => {
-          debugger
           const product = products.find((p) => p.id === productId);
           if (product) {
             product.thumbnail = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
@@ -106,18 +96,16 @@ export class OrderComponent implements OnInit {
             quantity: this.cart.get(productId)!
           };
         });
-        console.log('haha');
       },
       complete: () => {
-        debugger;
-        this.calculateTotal()
+        this.calculateTotal();
       },
       error: (error: HttpErrorResponse) => {
-        debugger;
         console.error(error?.error?.message ?? '');
       }
     });
   }
+
   isFormValid(): boolean {
     const fieldsToCheck = ['fullname', 'email', 'phone_number', 'address'];
     return fieldsToCheck.every(fieldName => {
@@ -125,9 +113,8 @@ export class OrderComponent implements OnInit {
       return field && field.valid;
     });
   }
+
   placeOrder() {
-    debugger
-    alert(JSON.stringify(this.orderForm.value));
     if (this.orderForm.errors == null && this.isFormValid()) {
       this.calculateTotal();
       this.orderData = {
@@ -145,31 +132,63 @@ export class OrderComponent implements OnInit {
         alert('Invalid total money! Please check your cart.');
         return;
       }
-      this.orderData.total_money = this.totalAmount;
-      this.orderService.placeOrder(this.orderData).subscribe({
-        next: (response: ApiResponse) => {
-          debugger;
-          console.error('Order successfully');
-          alert('Order successfully');
-          this.cartService.clearCart();
-          this.router.navigate(['/']);
-        },
-        complete: () => {
-          debugger;
-          this.calculateTotal();
-        },
-        error: (error: HttpErrorResponse) => {
-          debugger;
-          console.error(`Error: ${error?.error?.message ?? ''}`);
-          console.error('Full error response:', error);
-          console.error(`Error message: ${error?.error?.message ?? 'No message'}`);
-          alert('Lost information. Please check information again !!!');
-        },
-      });
+
+      // Check if VNPay is selected
+      if (this.orderForm.get('payment_method')?.value === 'vnpay') {
+        // Save order data temporarily and initiate VNPay payment
+        this.orderService.placeOrder(this.orderData).subscribe({
+          next: (response: ApiResponse) => {
+            const pendingOrderId = response.data.pendingOrderId; // Assume backend returns a pending order ID
+            this.initiateVNPayPayment(pendingOrderId);
+            this.cartService.clearCart();
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error('Error saving pending order:', error?.error?.message ?? '');
+            alert('Error initiating VNPay payment. Please try again.');
+          }
+        });
+      } else {
+        // Original order creation logic for non-VNPay methods
+        this.orderService.placeOrder(this.orderData).subscribe({
+          next: (response: ApiResponse) => {
+            console.log('Order successfully');
+            alert('Order successfully');
+            this.cartService.clearCart();
+            this.router.navigate(['/']);
+          },
+          complete: () => {
+            this.calculateTotal();
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error(`Error: ${error?.error?.message ?? ''}`);
+            alert('Lost information. Please check information again !!!');
+          },
+        });
+      }
     } else {
-      console.error('MEET SOME ERRORRR!!!');
-      alert('Error');
+      console.error('Form is invalid');
+      alert('Please fill in all required fields correctly.');
     }
+  }
+
+  initiateVNPayPayment(pendingOrderId: number) {
+    const amount = this.totalAmount;
+    const vnpayApiUrl = `${environment.apiBaseUrl}/payment/createURL/${amount}?pendingOrderId=${pendingOrderId}`;
+
+    this.http.get(vnpayApiUrl).subscribe({
+      next: (response: any) => {
+        if (response.paymentUrl) {
+          window.location.href = response.paymentUrl;
+        } else {
+          console.error('No payment URL returned');
+          alert('Failed to initiate VNPay payment. Please try again.');
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('VNPay API error:', error?.error?.message ?? '');
+        alert('Error initiating VNPay payment. Please try again.');
+      }
+    });
   }
 
   decreaseQuantity(index: number): void {
@@ -197,17 +216,16 @@ export class OrderComponent implements OnInit {
       return;
     }
   }
+
   confirmDelete(index: number): void {
     if (confirm('Do you want to remove this?')) {
-      // delete prct out of  cartItems
       this.cartItems.splice(index, 1);
-      // update this.cart from this.cartItems
       this.updateCartFromCartItems();
       this.calculateTotal();
     }
   }
+
   applyCoupon(): void {
-    debugger
     const couponCode = this.orderForm.get('couponCode')!.value;
     if (!this.couponApplied && couponCode) {
       this.calculateTotal();
@@ -220,6 +238,7 @@ export class OrderComponent implements OnInit {
         });
     }
   }
+
   private updateCartFromCartItems(): void {
     this.cart.clear();
     this.cartItems.forEach((item) => {

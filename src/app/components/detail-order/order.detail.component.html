@@ -1,137 +1,104 @@
-<!-- <app-header></app-header>
-<div class="container">
-    <div class="intro-section">
-        <h1>Chi tiết đơn hàng</h1>
-        <p>Xem thông tin chi tiết đơn hàng</p>
-    </div>
-    @if(orderResponse) {
-        <div class="row">
-            <div class="col-md-6">
-                <h2 class="product-header">Information orders</h2>
-                <div class="mb-3">
-                    <p class="form-label">Full name: {{ orderResponse.fullname }}</p>
-                </div>
-                <div class="mb-3">
-                    <p class="form-label">Email: {{ orderResponse.email }}</p>
-                </div>
-                <div class="mb-3">
-                    <p class="form-label">Phone number: {{ orderResponse.phone_number }}</p>
-                </div>
-                <div class="mb-3">
-                    <p class="form-label">Address: {{ orderResponse.address }}</p>
-                </div>
-                <div class="mb-3">
-                    <p class="form-label">Notes: {{ orderResponse.note }}</p>
-                </div>
-                <div class="mb-3">
-                    <p class="form-label">Delivery methods: {{ orderResponse.shipping_method }}</p>
-                </div>
-                <div class="mb-3">
-                    <p class="form-label">Payment methods: {{ orderResponse.payment_method }}</p>
-                </div>                        
-            </div>
-    
-            <div class="col-md-6">
-                <h2 class="product-order">Products</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-start">Products</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Total price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for(item of orderResponse.order_details; track item.product.name) {
-                            <tr>
-                                <td>
-                                    <div class="product-info">
-                                        <img [src]="item.product.thumbnail" alt="Product Image" class="product-image">
-                                        <span class="product-name">{{ item.product.name }}</span>
-                                    </div>
-                                </td>
-                                <td>{{ item.number_of_products }}</td>
-                                <td>{{ item.price | number:'1.2-2' }}</td>
-                                <td>{{ item.total_money | number:'1.2-2' }}</td>
-                            </tr>
-                        }                        
-                    </tbody>
-                </table>
-                <div class="text-start mt-3">
-                    <h4 class="header-text text-end">Total price: {{ orderResponse.total_money | number:'1.2-2' }}</h4>
-                </div>            
-            </div>
-        </div>    
-}    
-</div>
-<app-footer></app-footer> -->
-
 <app-header></app-header>
 <div class="container">
     <div class="intro-section">
-        <h1>Order detail</h1>
+        <h1>Order List</h1>
+       
     </div>
-    
-    <!-- Thông tin người nhận -->
-    <div *ngIf="orderResponse">
-        <div class="row">
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders;">
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.fullName }}</td>
+                        <td>{{ order.orderDate[0] + '-' + order.orderDate[1] + '-' + order.orderDate[2] }}</td>
+                        <td>{{ order.totalMoney | number:'1.2-2' }}</td>
+                        <td>
+                            <span class="status-badge" [ngClass]="{
+                                'status-open': order.status === 'shipped',
+                                'status-pending': order.status === 'pending'
+                            }">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-new-ticket" (click)="showOrderDetails(order.id)">View Details</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- The rest of your code (Order Information and Products in Order sections) remains unchanged -->
+    <div *ngIf="selectedOrder">
+        <div class="row mt-5">
             <div class="col-md-6">
-                <h2 class="product-header">Information orders</h2>
+                <h2 class="product-header">Order Information</h2>
                 <div class="mb-3">
-                    <p class="form-label">Full name: {{ orderResponse.fullname }}</p>
-                </div>
-                <!-- Các trường thông tin khác -->
-                <div class="mb-3">
-                    <p class="form-label">Email: {{ orderResponse.email }}</p>
+                    <p class="form-label">Full name: {{ selectedOrder.fullName }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Phone number: {{ orderResponse.phone_number }}</p>
+                    <p class="form-label">Email: {{ selectedOrder.email }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Address: {{ orderResponse.address }}</p>
+                    <p class="form-label">Phone number: {{ selectedOrder.phoneNumber }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Notes: {{ orderResponse.note }}</p>
+                    <p class="form-label">Address: {{ selectedOrder.address }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Delivery methods: {{ orderResponse.shipping_method }}</p>
+                    <p class="form-label">Notes: {{ selectedOrder.note }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Payment methods: {{ orderResponse.payment_method }}</p>
-                </div>                        
+                    <p class="form-label">Delivery methods: {{ selectedOrder.shippingMethod }}</p>
+                </div>
+                <div class="mb-3">
+                    <p class="form-label">Payment methods: {{ selectedOrder.paymentMethod }}</p>
+                </div>
             </div>
-    
+
             <div class="col-md-6">
-                <h2 class="product-order">Products</h2>
+                <h2 class="product-order">Products in Order</h2>
                 <table>
                     <thead>
                         <tr>
                             <th scope="col" class="text-start">Products</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Total price</th>
+                            <th scope="col">Total Price</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of orderResponse.order_details; trackBy: trackByFn">
+                        <tr *ngFor="let item of selectedOrder.orderDetails;">
                             <td>
                                 <div class="product-info">
-                                    <img [src]="item.product.thumbnail" alt="Product Image" class="product-image">
-                                    <span class="product-name">{{ item.product.name }}</span>
+                                    <img [src]="urlImg + item.thumbnail" alt="Product Image" class="product-image">
+                                    <span class="product-name">{{ item.productName }}</span>
                                 </div>
                             </td>
-                            <td>{{ item.number_of_products }}</td>
+                            <td>{{ item.numberOfProducts }}</td>
                             <td>{{ item.price | number:'1.2-2' }}</td>
-                            <td>{{ item.total_money | number:'1.2-2' }}</td>
-                        </tr>                        
+                            <td>{{ item.totalMoney | number:'1.2-2' }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="text-start mt-3">
-                    <h4 class="header-text text-end">Total price: {{ orderResponse.total_money | number:'1.2-2' }}</h4>
-                </div>            
+                    <h4 class="header-text text-end">Total price: {{ selectedOrder.totalMoney | number:'1.2-2' }}</h4>
+                </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 <app-footer></app-footer>

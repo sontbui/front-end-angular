@@ -69,7 +69,7 @@ export class UserService {
       const userResponseJSON = JSON.stringify(userResponse);  
       // Save the JSON string to local storage with a key (e.g., "userResponse")
       this.localStorage?.setItem('user', userResponseJSON);  
-      console.log('User response saved to local storage.');
+      console.log('User response saved to local storage.' + userResponseJSON);
     } catch (error) {
       console.error('Error saving user response to local storage:', error);
     }

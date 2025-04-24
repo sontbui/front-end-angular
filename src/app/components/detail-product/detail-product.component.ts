@@ -36,6 +36,10 @@ export class DetailProductComponent implements OnInit {
   showAlert: boolean = false;
   hiddenButton: boolean = false;
   productAfter: number = 0;
+  showCompareDialog: boolean = false;
+  productsToCompare: Product[] = [];
+  selectedCompareProduct?: Product;
+  urlImg: string;
   constructor(
     private productService: ProductService,
     private cartService: CartService,
@@ -47,43 +51,73 @@ export class DetailProductComponent implements OnInit {
 
   }
   ngOnInit() {  
-    const idParam = this.activatedRoute.snapshot.paramMap.get('id');
+    this.urlImg = environment.apiBaseUrl + '/products/images/';
 
-    debugger
-    //this.cartService.clearCart();
+    const idParam = this.activatedRoute.snapshot.paramMap.get('id');
     if (idParam !== null) {
       this.productId = +idParam;
     }
     if (!isNaN(this.productId)) {
-      this.productService.getDetailProduct(this.productId).subscribe({
-        next: (apiResponse: ApiResponse) => {
-          const response = apiResponse.data
-          debugger
-          if (response.product_images && response.product_images.length > 0) {
-            response.product_images.forEach((product_image: ProductImage) => { 
-              if (!product_image.isImageUrlUpdated) {
-                product_image.image_url = `${environment.apiBaseUrl}/products/images/${product_image.image_url}`;
-                product_image.isImageUrlUpdated = true;
-            } else {
-                console.log('Last url was updated:', product_image.image_url);
-            }
-            });
-          }
-          debugger
-          this.product = response
-          this.productAfter = response.price * 0.95;
-          this.showImage(0);
-        },
-        complete: () => {
-          debugger;
-        },
-        error: (error: HttpErrorResponse) => {
-          debugger;
-          console.error(error?.error?.message ?? '');
-        }
-      });
+      this.loadProductDetails();
+      this.loadProductsToCompare();
     } else {
       console.error('Invalid productId:', idParam);
+    }
+  }
+
+  loadProductDetails() {
+    this.productService.getDetailProduct(this.productId).subscribe({
+      next: (apiResponse: ApiResponse) => {
+        const response = apiResponse.data;
+        if (response.product_images && response.product_images.length > 0) {
+          response.product_images.forEach((product_image: ProductImage) => { 
+            if (!product_image.isImageUrlUpdated) {
+              product_image.image_url = `${environment.apiBaseUrl}/products/images/${product_image.image_url}`;
+              product_image.isImageUrlUpdated = true;
+            }
+          });
+        }
+        this.product = response;
+        this.productAfter = response.price * 0.95;
+        this.showImage(0);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error(error?.error?.message ?? '');
+      }
+    });
+  }
+
+  loadProductsToCompare() {
+    this.productService.getProducts('', 0, 0, 100).subscribe({
+      next: (apiResponse: ApiResponse) => {
+        this.productsToCompare = apiResponse.data.products.filter(
+          (p: Product) => p.id !== this.productId
+        );
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error(error?.error?.message ?? '');
+      }
+    });
+  }
+
+  openCompareDialog() {
+    this.showCompareDialog = true;
+  }
+
+  closeCompareDialog() {
+    this.showCompareDialog = false;
+    this.selectedCompareProduct = undefined;
+  }
+
+  selectProductToCompare(product: Product) {
+    this.selectedCompareProduct = product;
+    if (this.selectedCompareProduct.product_images) {
+      this.selectedCompareProduct.product_images.forEach((image: ProductImage) => {
+        if (!image.isImageUrlUpdated) {
+          image.image_url = `${environment.apiBaseUrl}/products/images/${image.image_url}`;
+          image.isImageUrlUpdated = true;
+        }
+      });
     }
   }
   showImage(index: number): void {
@@ -100,8 +134,8 @@ export class DetailProductComponent implements OnInit {
   }
   thumbnailClick(index: number) {
     debugger
-    // Gọi khi một thumbnail được bấm
-    this.currentImageIndex = index; // Cập nhật currentImageIndex
+
+    this.currentImageIndex = index; 
   }
   nextImage(): void {
     debugger
@@ -135,7 +169,7 @@ export class DetailProductComponent implements OnInit {
     }
   }
   updateQuantity(event: any) {
-    // check input is integer ?
+  
     const inputValue = parseInt(event.target.value);
     if (!isNaN(inputValue) && inputValue != 0) {
       this.quantity = inputValue;
@@ -158,5 +192,9 @@ export class DetailProductComponent implements OnInit {
       this.addToCart();
     }
     this.router.navigate(['/orders']);
+  }
+  onProductClick(productId: number) {
+
+    window.location.href = '/products/' + productId
   }
 }
