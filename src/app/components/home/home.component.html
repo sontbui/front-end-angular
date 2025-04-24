@@ -9,11 +9,11 @@
     <!--Đoạn này có 1 ô searchbox bên trái, 1 combobox bên phải  -->
     <div class="search-box">
         <input type="text" class="form-control search-input"
-            placeholder="Find products  "
+            placeholder="Nhập tên sản phẩm"
             [(ngModel)]="keyword">
         <select class="form-control product-category"
             [(ngModel)]="selectedCategoryId">
-            <option [value]="0">ALL</option>
+            <option [value]="0">Tất cả</option>
             @for(category of categories; track category.name) {
               <option [value]="category.id">
                 {{ category.name }}
@@ -21,7 +21,7 @@
             }
 
         </select>
-        <button class="btn btn-primary" id="btn-search" (click)="searchProducts()">Find</button>
+        <button class="btn btn-primary" id="btn-search" (click)="searchProducts()">Tìm kiếm</button>
     </div>
     <div class="row" >
         @for(product of products; track product.id) {
@@ -31,10 +31,10 @@
                 <h3 class="product-name">{{ product.name }}</h3>
                 <!-- <p class="product-description">{{ product.description }}</p> -->
                 <p class="product-price">
-                  Price:
-                 <del> ${{ product.price }}</del>
+                  Giá:
+                 <del> {{ product.price }} VND</del>
                   <span class="arrow">→</span>
-                 <span class="price-after"> ${{ product.price * 0.95 }}
+                 <span class="price-after"> {{ product.price * 0.95 }} VND
 
                  </span>
                 </p>

@@ -196,7 +196,25 @@
 //   .product-quantity .border-wrapper button:hover {
 //     background-color: #000000; /* Màu nút khi di chuột qua */
 //   }
-  
+.btn-compare {
+  background: linear-gradient(135deg, #00c6ff, #0072ff); // màu xanh kiểu info
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #138496;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
   .alert {
     color: red; /* Màu chữ thông báo */
   }
