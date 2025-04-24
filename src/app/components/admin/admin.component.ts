@@ -40,7 +40,7 @@ export class AdminComponent implements OnInit {
       const names = this.userResponse.fullname.split(' ');
       this.lastName = names[names.length - 1];
     }
-    debugger
+
     if (this.router.url === '/admin') {
       this.router.navigate(['/admin/orders']);
     }
@@ -61,6 +61,8 @@ export class AdminComponent implements OnInit {
       this.router.navigate(['/admin/products']);
     } else if (componentName === 'users') {
       this.router.navigate(['/admin/users']);
+    } else if (componentName === 'chat-admin') {
+      this.router.navigate(['/admin/chat-admin']);
     }
   }
 }

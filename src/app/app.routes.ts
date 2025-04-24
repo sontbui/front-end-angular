@@ -13,6 +13,7 @@ import { UserProfileComponent } from './components/user-profile/user.profile.com
 import { AdminComponent } from './components/admin/admin.component';
 import { AuthGuardFn } from './guards/auth.guard';
 import { AdminGuardFn } from './guards/admin.guard';
+import { ChatUserComponent } from './components/chat-user/chat-user.component';
 //import { OrderAdminComponent } from './components/admin/order/order.admin.component';
 
 export const routes: Routes = [
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'orders', component: OrderComponent,canActivate:[AuthGuardFn] },
   { path: 'user-profile', component: UserProfileComponent, canActivate:[AuthGuardFn] },
   { path: 'orders/:id', component: OrderDetailComponent },
+  { path: 'chat', component: ChatUserComponent },
   //Admin   
   { 
     path: 'admin', 

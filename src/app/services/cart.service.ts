@@ -38,7 +38,7 @@ export class CartService {
   private getCartKey():string {    
     const userResponseJSON = this.localStorage?.getItem('user'); 
     const userResponse = JSON.parse(userResponseJSON!);  
-    debugger
+
     return `cart:${userResponse?.id ?? ''}`;
 
   }
@@ -58,7 +58,7 @@ export class CartService {
     return this.cart;
   }
   private saveCartToLocalStorage(): void {
-    debugger
+ 
     this.localStorage?.setItem(this.getCartKey(), JSON.stringify(Array.from(this.cart.entries())));
   }  
   setCart(cart : Map<number, number>) {
