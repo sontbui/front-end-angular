@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TokenService } from '../../services/token.service';
 import { UserResponse } from '../../responses/user/user.response';
 import { CartService } from '../../services/cart.service';
@@ -8,7 +8,7 @@ import { ChatService } from '../../services/chat.service';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -40,12 +40,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Load user data
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
-
+  
     // Subscribe to cart item count
     this.cartService.cartItemCount$.subscribe((count) => {
       this.cartItemCount = count;
     });
-
+  
     // Subscribe to unread messages
     if (this.userResponse?.id) {
       this.chatService.initializeWebSocket(this.userResponse.id);
@@ -53,6 +53,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.hasUnreadMessages = hasUnread;
       });
     }
+  
+    // 🟢 Listen to router changes and update activeNavItem accordingly
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      const url = event.urlAfterRedirects;
+      if (url === '/') {
+        this.activeNavItem = 0;
+      } else if (url.startsWith('/orders')) {
+        this.activeNavItem = 1;
+      } else if (url.startsWith('/chat')) {
+        this.activeNavItem = 2;
+      }
+    });
   }
 
   togglePopover(event: Event): void {
