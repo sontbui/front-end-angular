@@ -1,39 +1,42 @@
-<div class="container">
-    <h1>Category's manage</h1>        
-    <div class="row">
-      <div class="col-md-8 ">
-        <button class="btn add-category" (click)="insertCategory()">Add new category</button>
-      </div>      
+<div class="container mt-4">
+  <h2 class="mb-4">Quản lý danh mục</h2>
+
+  <!-- Nút thêm danh mục -->
+  <div class="row mb-3">
+    <div class="col-md-12 text-end">
+      <button class="btn btn-primary" (click)="insertCategory()">+ Thêm danh mục</button>
     </div>
-    <table class="table">
+  </div>
+
+  <!-- Bảng danh mục -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover text-center">
       <thead class="table-light">
         <tr>
           <th>ID</th>
-          <th>Category's name</th>          
-          <th>Actions</th>
+          <th>Tên danh mục</th>
+          <th>Hành động</th>
         </tr>
       </thead>
-      <tbody>        
-        @for(category of categories; track category.id){
+      <tbody>
+        @for(category of categories; track category.id) {
           <tr>
             <td>{{ category.id }}</td>
-            <td>{{ category.name }}</td>          
+            <td>{{ category.name }}</td>
             <td>
-              <div style="display: flex; gap: 10px;">
-                <button class="btn btn-success" 
-                    (click)="updateCategory(category.id)">
-                  Update
-                </button>
-                <button class="btn btn-danger" 
-                  (click)="deleteCategory(category)">Delete
-                </button>            
-                </div>
-            </td>          
+              <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-sm btn-warning" (click)="updateCategory(category.id)">Sửa</button>
+                <button class="btn btn-sm btn-danger" (click)="deleteCategory(category)">Xoá</button>
+              </div>
+            </td>
           </tr>
-        } @empty {
-          <h2>No categories found</h2>
         }
-        
+        @empty {
+          <tr>
+            <td colspan="3" class="text-center text-muted">Không tìm thấy danh mục nào.</td>
+          </tr>
+        }
       </tbody>
-    </table>    
+    </table>
   </div>
+</div>

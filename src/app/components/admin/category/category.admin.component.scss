@@ -8,3 +8,11 @@ h1{
     background-color: rgb(43, 69, 30);
     color: white;
 }
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.btn-sm {
+  min-width: 70px;
+}

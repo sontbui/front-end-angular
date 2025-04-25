@@ -1,47 +1,67 @@
-<div class="container">
-    <br>
-  <div class="row">
-      <!-- Danh sách user và tin nhắn cuối cùng -->
+<div class="container py-4">
+    <div class="row">
+      <!-- Danh sách user và tin nhắn cuối -->
       <div class="col-md-4">
-          <h3>List Users</h3>
-          <ul class="list-group">
-              @for(summary of userSummaries; track summary.userId) {
-                  <li class="list-group-item" 
-                      [ngClass]="{'active': selectedUserId === summary.userId}"
-                      (click)="selectUser(summary.userId)">
-                      <div class="user-info">
-                          <strong>{{ summary.fullName }}</strong> ({{ summary.phoneNumber }})
-            
-                          <small style="color: white;">{{ summary.lastMessageTime | date:'HH:mm:ss' }}</small>
-                      </div>
-                  </li>
-              }
-          </ul>
+        <h4 class="text-primary mb-3">Danh sách người dùng</h4>
+        <ul class="list-group shadow-sm">
+          @for(summary of userSummaries; track summary.userId) {
+            <li class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
+                [ngClass]="{ 'active bg-primary text-white': selectedUserId === summary.userId }"
+                (click)="selectUser(summary.userId)">
+              <div>
+                <strong>{{ summary.fullName }}</strong><br>
+                <small>{{ summary.phoneNumber }}</small>
+              </div>
+              <small class="text-muted">{{ summary.lastMessageTime | date:'HH:mm:ss' }}</small>
+            </li>
+          }
+        </ul>
       </div>
-
+  
       <!-- Khung chat -->
       <div class="col-md-8">
-          @if(selectedUserId !== null) {
-              <div class="chat-container">
-                  <div class="chat-messages" #chatMessages>
-                      @for (message of messages; track message.id) {
-                          <div class="message" [ngClass]="{'sent': message.isSent, 'received': !message.isSent}">
-                              <p>{{ message.content }}</p>
-                              <span class="timestamp">{{ message.timestamp | date:'HH:mm:ss' }}</span>
-                          </div>
-                      }
+        @if(selectedUserId !== null) {
+          <div class="card shadow-sm">
+            <div class="card-header bg-light">
+              <h5 class="mb-0">Đoạn chat với người dùng</h5>
+            </div>
+  
+            <div class="card-body chat-messages overflow-auto" #chatMessages style="height: 400px;">
+              @for (message of messages; track message.id) {
+                <div class="mb-3">
+                  <div [ngClass]="{
+                      'text-end': message.isSent,
+                      'text-start': !message.isSent
+                    }">
+                    <div class="d-inline-block px-3 py-2 rounded"
+                        [ngClass]="{
+                          'bg-primary text-white': message.isSent,
+                          'bg-light border': !message.isSent
+                        }">
+                      {{ message.content }}
+                    </div>
+                    <div>
+                      <small class="text-muted">{{ message.timestamp | date:'HH:mm:ss' }}</small>
+                    </div>
                   </div>
-
-                  <!-- Ô nhập tin nhắn -->
-                  <div class="chat-input">
-                      <input type="text" class="form-control" placeholder="Type your message..." 
-                             [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
-                      <button class="btn btn-primary" (click)="sendMessage()">Send</button>
-                  </div>
+                </div>
+              }
+            </div>
+  
+            <div class="card-footer bg-white">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nhập tin nhắn..."
+                       [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
+                <button class="btn btn-primary" (click)="sendMessage()">Gửi</button>
               </div>
-          } @else {
-              <p>Please select a user to start chatting.</p>
-          }
+            </div>
+          </div>
+        } @else {
+          <div class="alert alert-info text-center mt-4">
+            Vui lòng chọn người dùng để bắt đầu trò chuyện.
+          </div>
+        }
       </div>
+    </div>
   </div>
-</div>
+  
