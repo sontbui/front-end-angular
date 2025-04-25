@@ -31,7 +31,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Số điện thoại</label>
-                    <input type="text" class="form-control" formControlName="phone_number" placeholder="Phone number"
+                    <input type="text" class="form-control" formControlName="phone_number" placeholder="Số điện thoại"
                         required id="phone"
                         [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
                     @if(orderForm.get('phone_number')!.invalid
@@ -45,8 +45,8 @@
                     }
                 </div>
                 <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" formControlName="address" placeholder="Address" required
+                    <label for="address" class="form-label">Địa chỉ</label>
+                    <input type="text" class="form-control" formControlName="address" placeholder="Nhập địa chỉ" required
                         id="address"
                         [class.is-invalid]="orderForm.get('address')!.invalid && orderForm.get('address')!.touched">
                     @if(orderForm.get('address')!.invalid
@@ -107,11 +107,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td><del class="price-original">{{ (item.product.price ) | number:'1.2-2' }} VND</del>
+                                    <td><del class="price-original">{{ (item.product.price ) | number:'1.2-2' }} đ</del>
                                     </td>
                                     <td><span class="arrow">→</span></td>
                                     <td class="price-after">{{ ((item.product.price * 0.95 ) * item.quantity) |
-                                        number:'1.2-2' }} VND</td>
+                                        number:'1.2-2' }} đ</td>
                                     <td>
                                         <button class="btn btn-danger" (click)="confirmDelete(i)">
                                             Xoá
@@ -123,7 +123,7 @@
                     </table>
                 </div>
                 <div class="text-start mt-3 coupon-and-price-container">
-                    <h4 class="header-text text-end total-price">Total price: ${{ totalAmount | number:'1.2-2'}} VND </h4>
+                    <h4 class="header-text text-end total-price">Tổng giá trị đơn hàng: {{ totalAmount | number:'1.2-2'}} đ </h4>
                 </div>
                 @if(!isFormValid()){
                 <div class="text-start mt-3" *ngIf="cartItems.length > 0">

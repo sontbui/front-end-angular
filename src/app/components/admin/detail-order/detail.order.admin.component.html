@@ -40,7 +40,7 @@
             @for(order_detail of orderResponse.order_details; track order_detail.product.name) {
               <tr>
                 <td>{{ order_detail.product.name }}</td>
-                <td>{{ order_detail.product.price | number:'1.0-0' }} VND</td>
+                <td>{{ order_detail.product.price | number:'1.0-0' }} đ</td>
                 <td>{{ order_detail.number_of_products }}</td>
               </tr>
             }

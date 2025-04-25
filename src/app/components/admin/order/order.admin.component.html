@@ -42,7 +42,7 @@
             <td>{{ order.note }}</td>
             <td>{{ order.order_date | date:'dd/MM/yyyy' }}</td>
             <td>{{ order.status }}</td>
-            <td>{{ order.total_money | number:'1.0-0' }} VND</td>
+            <td>{{ order.total_money | number:'1.0-0' }} đ</td>
             <td>
               <div class="d-flex justify-content-center gap-2">
                 <button class="btn btn-sm btn-info" (click)="viewDetails(order)">Chi tiết</button>
