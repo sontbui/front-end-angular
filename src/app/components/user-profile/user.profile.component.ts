@@ -130,7 +130,7 @@ export class UserProfileComponent implements OnInit {
           error: (error: HttpErrorResponse) => {
             debugger;
             console.error(error?.error?.message ?? '');
-            alert("Lost information !!" + error?.error?.message ?? ' ');
+            alert("Lost information !!" + error?.error?.message || ' ');
           } 
         });
     } else {
