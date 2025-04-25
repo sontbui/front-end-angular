@@ -2,12 +2,12 @@
 <form [formGroup]="userProfileForm"> 
 <div class="row">
     <div class="col-md-3 mx-auto">
-        <h2 class="product-header">Information</h2>
+        <h2 class="product-header">Thông tin cá nhân</h2>
             <div class="mb-3">
-                <label for="fullname" class="form-label">Full name</label>
+                <label for="fullname" class="form-label">Họ và tên</label>
                 <input type="text" 
                     formControlName="fullname" 
-                    placeholder="Your's name" 
+                    placeholder="Họ và tên" 
                     class="form-control" 
                     id="fullname" 
                     [class.is-invalid]="userProfileForm.get('fullname')!.invalid && userProfileForm.get('fullname')!.touched">
@@ -19,10 +19,10 @@
                   }                    
             </div>
             <div class="mb-3">
-                <label for="address" class="form-label">Address</label>
+                <label for="address" class="form-label">Địa chỉ</label>
                 <input type="text" 
                     formControlName="address" 
-                    placeholder="Address" 
+                    placeholder="Địa chỉ" 
                     class="form-control" 
                     id="address" 
                     [class.is-invalid]="userProfileForm.get('address')!.invalid && userProfileForm.get('address')!.touched">  
@@ -34,18 +34,18 @@
                   }                     
             </div>                        
             <div class="mb-3">
-                <label for="date_of_birth" class="form-label">Birthday</label>
+                <label for="date_of_birth" class="form-label">Ngày tháng năm sinh</label>
                 <input type="date" 
                     formControlName="date_of_birth" 
                     class="form-control" 
                     id="date_of_birth" >                
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">Mật khẩu</label>
                 <input type="password" 
                        class="form-control" 
                        formControlName="password"                         
-                       placeholder="Password" 
+                       placeholder="Mật khẩu mới" 
                        required
                        id="password" 
                        [class.is-invalid]="userProfileForm.get('password')!.invalid 
@@ -58,11 +58,11 @@
                   }                
               </div>              
               <div class="mb-3">
-                <label for="retype_password" class="form-label">Enter password again</label>
+                <label for="retype_password" class="form-label">Nhập lại mật khẩu</label>
                 <input type="password" 
                        class="form-control" 
                        formControlName="retype_password"                         
-                       placeholder="Password again" 
+                       placeholder="Nhập lại mật khẩu" 
                        required
                        id="retype_password" 
                        [class.is-invalid]="userProfileForm.get('retype_password')!.invalid 
@@ -76,7 +76,7 @@
               <div class="text-center">
                 <button type="button" 
                     (click)="save()"
-                    class="btn btn-dark">Save change</button>
+                    class="btn btn-dark">Lưu thay đổi</button>
               </div>
             </div>  
 

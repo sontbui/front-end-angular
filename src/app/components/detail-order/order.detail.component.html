@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="container">
     <div class="intro-section">
-        <h1>Order List</h1>
+        <h1>Danh sách đơn hàng đã đặt</h1>
        
     </div>
 
@@ -10,12 +10,12 @@
             <table class="ticket-table">
                 <thead>
                     <tr>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">Full Name</th>
-                        <th scope="col">Order Date</th>
-                        <th scope="col">Total Price</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Đơn hàng ID</th>
+                        <th scope="col">Họ và tên người nhận</th>
+                        <th scope="col">Ngày đặt hàng</th>
+                        <th scope="col">Tổng giá </th>
+                        <th scope="col">Trạng thái đơn hàng</th>
+                        <th scope="col">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                             </span>
                         </td>
                         <td>
-                            <button class="btn-new-ticket" (click)="showOrderDetails(order.id)">View Details</button>
+                            <button class="btn-new-ticket" (click)="showOrderDetails(order.id)">Xem chi tiết</button>
                         </td>
                     </tr>
                 </tbody>
@@ -45,39 +45,39 @@
     <div *ngIf="selectedOrder">
         <div class="row mt-5">
             <div class="col-md-6">
-                <h2 class="product-header">Order Information</h2>
+                <h2 class="product-header">Thông tin đơn hàng</h2>
                 <div class="mb-3">
-                    <p class="form-label">Full name: {{ selectedOrder.fullName }}</p>
+                    <p class="form-label">Họ và tên: {{ selectedOrder.fullName }}</p>
                 </div>
                 <div class="mb-3">
                     <p class="form-label">Email: {{ selectedOrder.email }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Phone number: {{ selectedOrder.phoneNumber }}</p>
+                    <p class="form-label">Số điện thoại: {{ selectedOrder.phoneNumber }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Address: {{ selectedOrder.address }}</p>
+                    <p class="form-label">Địa chỉ: {{ selectedOrder.address }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Notes: {{ selectedOrder.note }}</p>
+                    <p class="form-label">Lưu ý: {{ selectedOrder.note }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Delivery methods: {{ selectedOrder.shippingMethod }}</p>
+                    <p class="form-label">Phương thức vận chuyển: {{ selectedOrder.shippingMethod }}</p>
                 </div>
                 <div class="mb-3">
-                    <p class="form-label">Payment methods: {{ selectedOrder.paymentMethod }}</p>
+                    <p class="form-label">Phương thức thanh toán: {{ selectedOrder.paymentMethod }}</p>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <h2 class="product-order">Products in Order</h2>
+                <h2 class="product-order">Chi tiết các sản phẩm</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th scope="col" class="text-start">Products</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Total Price</th>
+                            <th scope="col" class="text-start">Sản phẩm</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Tổng tiền</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,13 +89,13 @@
                                 </div>
                             </td>
                             <td>{{ item.numberOfProducts }}</td>
-                            <td>{{ item.price | number:'1.2-2' }}</td>
-                            <td>{{ item.totalMoney | number:'1.2-2' }}</td>
+                            <td>{{ item.price | number:'1.2-2' }} đ</td>
+                            <td>{{ item.totalMoney | number:'1.2-2' }} đ</td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="text-start mt-3">
-                    <h4 class="header-text text-end">Total price: {{ selectedOrder.totalMoney | number:'1.2-2' }}</h4>
+                    <h4 class="header-text text-end">Tổng giá trị đơn hàng: {{ selectedOrder.totalMoney | number:'1.2-2' }} đ</h4>
                 </div>
             </div>
         </div>

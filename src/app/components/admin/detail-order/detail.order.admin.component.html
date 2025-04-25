@@ -1,56 +1,57 @@
-<h1>This is detail order admin</h1>
-<div class="container">
-  <h1>Order Details</h1>
+<div class="container mt-4 mb-4">
+  <h2 class="mb-4">Chi tiết đơn hàng</h2>
 
   <div class="row">
-    <div class="col-md-6">
-      <h3>Order Information</h3>
-      <p><strong>Order ID:</strong> {{ orderResponse.id }}</p>
-      <p><strong>User ID:</strong> {{ orderResponse.user_id }}</p>
-      <p><strong>Full Name:</strong> {{ orderResponse.fullname }}</p>
-      <p><strong>Phone Number:</strong> {{ orderResponse.phone_number }}</p>
-      <p><strong>Email:</strong> {{ orderResponse.email }}</p>
-      <p><strong>Address:</strong> {{ orderResponse.address }}</p>
-      <p><strong>Note:</strong> {{ orderResponse.note }}</p>
-      <p><strong>Order Date:</strong> {{ orderResponse.order_date | date }}</p>
-
-      <div class="form-group">
-        <label for="statusSelect"><strong>Status:</strong></label>
-        <select class="form-control" id="statusSelect"
-          [(ngModel)]="orderResponse.status">
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="shipped">Shipped</option>
-          <option value="delivered">Delivered</option>
-          <option value="cancelled">Cancelled</option>
+    <!-- Thông tin đơn hàng -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm p-4">
+        <h5 class="mb-3">Thông tin đơn hàng</h5>
+        <p><strong>Mã đơn hàng:</strong> {{ orderResponse.id }}</p>
+        <p><strong>Người đặt:</strong> {{ orderResponse.fullname }}</p>
+        <p><strong>Số điện thoại:</strong> {{ orderResponse.phone_number }}</p>
+        <p><strong>Email:</strong> {{ orderResponse.email }}</p>
+        <p><strong>Địa chỉ:</strong> {{ orderResponse.address }}</p>
+        <p><strong>Ghi chú:</strong> {{ orderResponse.note || 'Không có' }}</p>
+        <p><strong>Ngày đặt:</strong> {{ orderResponse.order_date | date:'dd/MM/yyyy' }}</p>
+        <p><strong>Trạng thái:</strong></p>
+        <select class="form-control mt-2" [(ngModel)]="orderResponse.status">
+          <option value="pending">Chờ xử lý</option>
+          <option value="processing">Đang xử lý</option>
+          <option value="shipped">Đã gửi hàng</option>
+          <option value="delivered">Đã giao</option>
+          <option value="cancelled">Đã huỷ</option>
         </select>
       </div>
+    </div>
+
+    <!-- Chi tiết sản phẩm -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm p-4">
+        <h5 class="mb-3">Sản phẩm</h5>
+        <table class="table table-bordered table-hover text-center">
+          <thead class="table-light">
+            <tr>
+              <th>Tên sản phẩm</th>
+              <th>Giá</th>
+              <th>Số lượng</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(order_detail of orderResponse.order_details; track order_detail.product.name) {
+              <tr>
+                <td>{{ order_detail.product.name }}</td>
+                <td>{{ order_detail.product.price | number:'1.0-0' }} đ</td>
+                <td>{{ order_detail.number_of_products }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  <h3>Order Details</h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <!--<th>Total</th>-->
-      </tr>
-    </thead>
-    <tbody>
-      @for(order_detail of orderResponse.order_details;
-        track order_detail.product.name) {
-          <tr>
-            <td>{{ order_detail.product.name }}</td>
-            <td>
-              <p>{{order_detail.product.price}}</p>
-            <td>
-              <p>{{order_detail.number_of_products}}</p>
-            </td>
-            <!--<td>{{ order_detail.total_money }}</td>-->
-          </tr>
-      }
-    </tbody>
-  </table>
-  <button class="btn btn-primary col-md-2" id="btn-save"
-    (click)="saveOrder()">Save</button>
+
+  <!-- Nút lưu -->
+  <div class="text-end">
+    <button class="btn btn-success px-4" (click)="saveOrder()">Lưu</button>
+  </div>
 </div>

@@ -1,41 +1,87 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <h3>Insert Product</h3>
-        <form (ngSubmit)="insertProduct()" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" [(ngModel)]="insertProductDTO.name" name="name" class="form-control" required>
-          </div>
-  
-          <div class="form-group mb-3">
-            <label for="price">Price:</label>
-            <input type="text" id="price" [(ngModel)]="insertProductDTO.price" name="price" class="form-control col-md-3" required>
-          </div>
-  
-          <div class="form-group mb-3">
-            <label for="description">Description:</label>
-            <textarea id="description" [(ngModel)]="insertProductDTO.description" name="description" class="form-control" required></textarea>
-          </div>
-  
-          <div class="form-group mb-3">
-            <label for="category">Category:</label>
-            <select id="category" [(ngModel)]="insertProductDTO.category_id" name="category" class="form-control" required>
-              <!-- Display list of categories -->
-              @for(category of categories; track category.id) {
-                <option 
-                [value]="category.id">{{ category.name }}</option>
-              }              
-            </select>
-          </div>
-  
-          <div class="form-group mb-3">
-            <label for="images">Images (up to 5):</label>
-            <input type="file" id="images" name="images" multiple (change)="onFileChange($event)" accept="image/*">
-          </div>
-  
-          <button type="submit" class="btn btn-primary">Insert</button>
-        </form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+          <h4 class="mb-4 text-center text-primary">Thêm sản phẩm mới</h4>
+
+          <form (ngSubmit)="insertProduct()" enctype="multipart/form-data">
+            <!-- Tên sản phẩm -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Tên sản phẩm:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control"
+                [(ngModel)]="insertProductDTO.name"
+                required
+              />
+            </div>
+
+            <!-- Giá -->
+            <div class="mb-3">
+              <label for="price" class="form-label">Giá:</label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                class="form-control"
+                [(ngModel)]="insertProductDTO.price"
+                required
+              />
+            </div>
+
+            <!-- Mô tả -->
+            <div class="mb-3">
+              <label for="description" class="form-label">Mô tả:</label>
+              <textarea
+                id="description"
+                name="description"
+                class="form-control"
+                [(ngModel)]="insertProductDTO.description"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+
+            <!-- Danh mục -->
+            <div class="mb-3">
+              <label for="category" class="form-label">Danh mục:</label>
+              <select
+                id="category"
+                name="category"
+                class="form-select"
+                [(ngModel)]="insertProductDTO.category_id"
+                required
+              >
+                @for(category of categories; track category.id) {
+                  <option [value]="category.id">{{ category.name }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Hình ảnh -->
+            <div class="mb-4">
+              <label for="images" class="form-label">Hình ảnh (tối đa 5):</label>
+              <input
+                type="file"
+                id="images"
+                name="images"
+                class="form-control"
+                multiple
+                (change)="onFileChange($event)"
+                accept="image/*"
+              />
+            </div>
+
+            <!-- Submit -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-success px-4">Thêm</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
+</div>

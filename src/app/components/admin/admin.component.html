@@ -1,9 +1,9 @@
 <div class="container-fluid">
     <header class="header bg-secondary text-white d-flex justify-content-between">
-      <h1 class="header-title">Store's Manage</h1>
-      <h1 class="header-title"> Welcome's {{lastName}}</h1>
+      <h1 class="header-title">Quản lý cửa hàng</h1>
+      <h1 class="header-title"> Chào mừng {{lastName}}</h1>
       <!-- Logout Button -->
-      <button class="btn btn-danger btn-sm logout" (click)="logout()">Logout</button>
+      <button class="btn btn-danger btn-sm logout" (click)="logout()">Đăng xuất</button>
     </header>
     <div class="row">
       <nav id="sidebar" class="col-md-2 col-lg-2 d-md-block bg-secondary sidebar">
@@ -14,7 +14,7 @@
                 (click)="showAdminComponent('orders')"
                 routerLink="/admin/orders"
                 routerLinkActive="active">
-                <i class="fab fa-first-order icon"></i>Orders
+                <i class="fab fa-first-order icon"></i>Đơn hàng
               </a>
             </li>
             <li class="nav-item">
@@ -22,7 +22,7 @@
                 (click)="showAdminComponent('categories')"
                   routerLink="/admin/categories"
                   routerLinkActive="active">
-                <i class="fab fa-canadian-maple-leaf icon"></i>Categories
+                <i class="fab fa-canadian-maple-leaf icon"></i>Phân loại
               </a>
             </li>
             <li class="nav-item">
@@ -30,7 +30,7 @@
                 (click)="showAdminComponent('products')"
                 routerLink="/admin/products"
                 routerLinkActive="active">
-                <i class="fab fa-codepen icon"></i>Products
+                <i class="fab fa-codepen icon"></i>Sản phẩm
               </a>
             </li>
          
@@ -39,7 +39,7 @@
                 (click)="showAdminComponent('users')"
                 routerLink="/admin/chat"
                 routerLinkActive="active">
-                <i class="fab fa-codepen icon"></i>Users
+                <i class="fab fa-codepen icon"></i>Người dùng
               </a>
             </li>
             <li class="nav-item">
@@ -47,7 +47,7 @@
                 (click)="showAdminComponent('chat-admin')"
                 routerLink="/admin/chat-admin"
                 routerLinkActive="active">
-                <i class="fab fa-codepen icon"></i>Chat
+                <i class="fab fa-codepen icon"></i>Xử lý đơn hàng
               </a>
             </li>
           </ul>
