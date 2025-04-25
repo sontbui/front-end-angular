@@ -5,10 +5,10 @@
     <form [formGroup]="orderForm">
         <div class="row">
             <div class="col-md-5">
-                <h2 class="product-headers">Information Delivery</h2>
+                <h2 class="product-headers">Thông tin giao hàng</h2>
                 <div class="mb-3">
-                    <label for="fullname" class="form-label">Fullname</label>
-                    <input type="text" formControlName="fullname" placeholder="Your name" class="form-control"
+                    <label for="fullname" class="form-label">Họ và tên</label>
+                    <input type="text" formControlName="fullname" placeholder="Nhập họ và tên" class="form-control"
                         id="fullname"
                         [class.is-invalid]="orderForm.get('fullname')!.invalid && orderForm.get('fullname')!.touched">
                     @if(orderForm.get('fullname')!.invalid &&
@@ -30,7 +30,7 @@
                     }
                 </div>
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Phone number</label>
+                    <label for="phone" class="form-label">Số điện thoại</label>
                     <input type="text" class="form-control" formControlName="phone_number" placeholder="Phone number"
                         required id="phone"
                         [class.is-invalid]="orderForm.get('phone_number')!.invalid && orderForm.get('phone_number')!.touched">
@@ -52,33 +52,33 @@
                     @if(orderForm.get('address')!.invalid
                     && orderForm.get('address')!.touched) {
                     <div class="invalid-feedback">
-                        Address is required and contain leastest 5 digit long.
+                        Địa chỉ giao hàng là bắt buộc
                     </div>
                     }
                 </div>
                 <div class="mb-3">
-                    <label for="note" class="form-label">Note</label>
+                    <label for="note" class="form-label">Lưu ý cho đơn hàng của bạn</label>
                     <input type="text" class="form-control" formControlName="note" placeholder="Notes" required
                         id="note">
                 </div>
                 <div class="mb-3">
-                    <label for="shippingMethod">Delivery methods</label>
+                    <label for="shippingMethod">Phương thức vận chuyển</label>
                     <select class="form-control" id="shippingMethod" formControlName="shipping_method">
-                        <option value="express">Express</option>
-                        <option value="normal">Normal</option>
+                        <option value="express">Giao hàng hoả tốc</option>
+                        <option value="normal">Giao hàng bình thường</option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="paymentMethod">Payment methods</label>
+                    <label for="paymentMethod">Phương thức thanh toán</label>
                     <select class="form-control" id="paymentMethod" formControlName="payment_method">
-                        <option value="cod">Cash on Delivery</option>
+                        <option value="cod">Thanh toán khi nhận hàng</option>
                         <option value="vnpay">VNPay</option>
-                        <option value="other">Different methods</option>
+                        
                     </select>
                 </div>
             </div>
             <div class="col-md-7">
-                <h2 class="product-order">Product in cart</h2>
+                <h2 class="product-order">Sản phẩm</h2>
                 <div class="product-table-wrapper">
                     <table class="product-table">
                         <tbody>
@@ -107,14 +107,14 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td><del class="price-original">{{ (item.product.price ) | number:'1.2-2' }}</del>
+                                    <td><del class="price-original">{{ (item.product.price ) | number:'1.2-2' }} VND</del>
                                     </td>
                                     <td><span class="arrow">→</span></td>
                                     <td class="price-after">{{ ((item.product.price * 0.95 ) * item.quantity) |
-                                        number:'1.2-2' }}</td>
+                                        number:'1.2-2' }} VND</td>
                                     <td>
                                         <button class="btn btn-danger" (click)="confirmDelete(i)">
-                                            Remove
+                                            Xoá
                                         </button>
                                     </td>
                                 </tr>
@@ -123,16 +123,16 @@
                     </table>
                 </div>
                 <div class="text-start mt-3 coupon-and-price-container">
-                    <h4 class="header-text text-end total-price">Total price: ${{ totalAmount | number:'1.2-2'}} </h4>
+                    <h4 class="header-text text-end total-price">Total price: ${{ totalAmount | number:'1.2-2'}} VND </h4>
                 </div>
                 @if(!isFormValid()){
                 <div class="text-start mt-3" *ngIf="cartItems.length > 0">
-                    <button class="btn orderBTN" type="button" [disabled]="!isFormValid()">Please fill full and valid information form !!!</button>
+                    <button class="btn orderBTN" type="button" [disabled]="!isFormValid()">Vui lòng điền đầy đủ thông tin giao hàng !!!</button>
                 </div>
                 }
                 @else {
                     <div class="text-start mt-3">
-                        <button (click)="placeOrder()" class="btn orderBTN" type="submit" [disabled]="!isFormValid()">Order</button>
+                        <button (click)="placeOrder()" class="btn orderBTN" type="submit" [disabled]="!isFormValid()">Đặt hàng</button>
                     </div>
                 }
             </div>
