@@ -21,7 +21,7 @@ export class ChatService implements OnDestroy {
     unreadMessages$ = this.unreadMessagesSubject.asObservable();
     private isChatPageActive = false;
     private senderId?: number;
-    private receiverId: number = 12; // Default receiver ID
+    private receiverId: number = 19; // Default receiver ID
 
     constructor(private http: HttpClient) {}
 
@@ -62,6 +62,7 @@ export class ChatService implements OnDestroy {
     }
 
     sendMessage(message: { senderId: number; receiverId: number; content: string; time: string }): void {
+        alert('Sending message: ' + JSON.stringify(message));
         if (this.socket && this.socket.readyState === WebSocket.OPEN) {
             this.socket.send(JSON.stringify(message));
         }

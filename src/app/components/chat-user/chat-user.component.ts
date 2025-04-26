@@ -53,9 +53,11 @@ export class ChatUserComponent implements OnInit, AfterViewChecked, OnDestroy {
             const user = JSON.parse(userJson);
             this.senderId = user.id;
             console.log('User ID:', this.senderId);
-
+            // alert('User ID: ' + this.senderId);
             // Initialize WebSocket
-            this.chatService.initializeWebSocket(this.senderId);
+            if (this.senderId !== undefined) {
+                this.chatService.initializeWebSocket(this.senderId);
+            }
             // Mark chat page as active (resets unread status)
             this.chatService.setChatPageActive(true);
             // Load chat history
@@ -100,9 +102,9 @@ export class ChatUserComponent implements OnInit, AfterViewChecked, OnDestroy {
                 content: this.newMessage.trim(),
                 time: new Date().toISOString()
             };
-
+            alert('Sending message: ' + JSON.stringify(chatMessage)); // Debugging alert
             this.chatService.sendMessage(chatMessage);
-
+            
             this.messages.push({
                 id: this.messageId++,
                 content: this.newMessage,
