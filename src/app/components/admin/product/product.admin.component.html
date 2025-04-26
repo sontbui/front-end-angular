@@ -3,7 +3,7 @@
 
   <!-- Tìm kiếm + Thêm sản phẩm -->
   <div class="row mb-3 align-items-center">
-    <div class="col-md-8">
+    <div class="col-md-5">
       <input type="text" class="form-control" placeholder="Tìm sản phẩm..." [(ngModel)]="keyword">
     </div>
     <div class="col-md-2">
@@ -11,6 +11,16 @@
     </div>
     <div class="col-md-2 text-end">
       <button class="btn btn-success w-100" (click)="insertProduct()">+ Thêm sản phẩm</button>
+    </div>
+    <div class="col-md-3">
+      <select class="form-control product-category" [(ngModel)]="selectedCategoryId">
+        <option [value]="0">Tất cả</option>
+        @for(category of categories; track category.name) {
+        <option [value]="category.id">
+          {{ category.name }}
+        </option>
+        }
+      </select>
     </div>
   </div>
 
@@ -29,21 +39,21 @@
       </thead>
       <tbody>
         @for(product of products; track product.id) {
-          <tr>
-            <td>{{ product.id }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price | number }}₫</td>
-            <td>
-              <img [src]="product.url" alt="Thumbnail" width="80" height="80" class="rounded shadow-sm object-fit-cover">
-            </td>
-            <td class="text-truncate" style="max-width: 200px;">{{ product.description }}</td>
-            <td>
-              <div class="d-flex justify-content-center gap-2">
-                <button class="btn btn-sm btn-warning" (click)="updateProduct(product.id)">Sửa</button>
-                <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)">Xoá</button>
-              </div>
-            </td>
-          </tr>
+        <tr>
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price | number }}₫</td>
+          <td>
+            <img [src]="product.url" alt="Thumbnail" width="80" height="80" class="rounded shadow-sm object-fit-cover">
+          </td>
+          <td class="text-truncate" style="max-width: 200px;">{{ product.description }}</td>
+          <td>
+            <div class="d-flex justify-content-center gap-2">
+              <button class="btn btn-sm btn-warning" (click)="updateProduct(product.id)">Sửa</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteProduct(product)">Xoá</button>
+            </div>
+          </td>
+        </tr>
         }
       </tbody>
     </table>
@@ -54,26 +64,25 @@
     <nav>
       <ul class="pagination">
         @if(currentPage > 0) {
-          <li class="page-item">
-            <a class="page-link" (click)="onPageChange(0)">« Đầu</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" (click)="onPageChange(currentPage - 1)">‹</a>
-          </li>
+        <li class="page-item">
+          <a class="page-link" (click)="onPageChange(0)">« Đầu</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" (click)="onPageChange(currentPage - 1)">‹</a>
+        </li>
         }
         @for(page of visiblePages; track page) {
-          <li class="page-item" [ngClass]="{'active': page === currentPage + 1}">
-            <a class="page-link" (click)="onPageChange(page - 1)">{{ page }}</a>
-          </li>
+        <li class="page-item" [ngClass]="{'active': page === currentPage + 1}">
+          <a class="page-link" (click)="onPageChange(page - 1)">{{ page }}</a>
+        </li>
         }
-        @if(currentPage < totalPages - 1) {
-          <li class="page-item">
-            <a class="page-link" (click)="onPageChange(currentPage + 1)">›</a>
+        @if(currentPage < totalPages - 1) { <li class="page-item">
+          <a class="page-link" (click)="onPageChange(currentPage + 1)">›</a>
           </li>
           <li class="page-item">
             <a class="page-link" (click)="onPageChange(totalPages - 1)">Cuối »</a>
           </li>
-        }
+          }
       </ul>
     </nav>
   </div>

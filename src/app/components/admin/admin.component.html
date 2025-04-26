@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <header class="header bg-secondary text-white d-flex justify-content-between">
       <h1 class="header-title">Quản lý cửa hàng</h1>
-      <h1 class="header-title"> Chào mừng {{lastName}}</h1>
+      <h1 class="header-title"> Chào mừng {{firstName}}</h1>
       <!-- Logout Button -->
       <button class="btn btn-danger btn-sm logout" (click)="logout()">Đăng xuất</button>
     </header>
@@ -10,11 +10,19 @@
         <div class="position-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
+              <a class="nav-link" id="test_dashboard"
+                (click)="showAdminComponent('dashboard')"
+                routerLink="/admin/dashboard"
+                routerLinkActive="active">
+                <i class="fas fa-chart-pie icon"></i>Thống kê
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" id="test_order"
                 (click)="showAdminComponent('orders')"
                 routerLink="/admin/orders"
                 routerLinkActive="active">
-                <i class="fab fa-first-order icon"></i>Đơn hàng
+                <i class="fas fa-shopping-cart icon"></i>Đơn hàng
               </a>
             </li>
             <li class="nav-item">
@@ -22,7 +30,7 @@
                 (click)="showAdminComponent('categories')"
                   routerLink="/admin/categories"
                   routerLinkActive="active">
-                <i class="fab fa-canadian-maple-leaf icon"></i>Phân loại
+                  <i class="fas fa-tags icon"></i>Phân loại
               </a>
             </li>
             <li class="nav-item">
@@ -30,7 +38,7 @@
                 (click)="showAdminComponent('products')"
                 routerLink="/admin/products"
                 routerLinkActive="active">
-                <i class="fab fa-codepen icon"></i>Sản phẩm
+                <i class="fas fa-box icon"></i>Sản phẩm
               </a>
             </li>
          
@@ -39,7 +47,7 @@
                 (click)="showAdminComponent('users')"
                 routerLink="/admin/chat"
                 routerLinkActive="active">
-                <i class="fab fa-codepen icon"></i>Người dùng
+                <i class="fas fa-users icon"></i>Người dùng
               </a>
             </li>
             <li class="nav-item">
@@ -47,7 +55,7 @@
                 (click)="showAdminComponent('chat-admin')"
                 routerLink="/admin/chat-admin"
                 routerLinkActive="active">
-                <i class="fab fa-codepen icon"></i>Xử lý đơn hàng
+                <i class="fas fa-clipboard-list icon"></i>Xử lý đơn hàng
               </a>
             </li>
           </ul>

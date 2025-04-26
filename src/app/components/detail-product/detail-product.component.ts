@@ -37,6 +37,7 @@ export class DetailProductComponent implements OnInit {
   hiddenButton: boolean = false;
   productAfter: number = 0;
   showCompareDialog: boolean = false;
+  showNoCompareDialog: boolean = false;
   productsToCompare: Product[] = [];
   selectedCompareProduct?: Product;
   urlImg: string;
@@ -106,14 +107,17 @@ export class DetailProductComponent implements OnInit {
     // Lọc sản phẩm cùng loại (cùng category_id)
     this.productsToCompare = this.productsToCompare.filter(p => p.category_id === this.product?.category_id);
     if (this.productsToCompare.length === 0) {
-      alert('Không có sản phẩm nào cùng loại để so sánh.');
+      this.showNoCompareDialog = true;
       return;
     }
     this.selectedCompareProduct = undefined;
     this.showCompareDialog = true;
   }
 
-
+  closeNoCompareDialog() {
+    this.showNoCompareDialog = false;
+  }
+  
   closeCompareDialog() {
     this.showCompareDialog = false;
     this.selectedCompareProduct = undefined;

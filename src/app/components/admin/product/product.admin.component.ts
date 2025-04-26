@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiResponse } from '../../../responses/api.response';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { CategoryService } from '../../../services/category.service';
+import { Category } from '../../../models/category';
 
 
 @Component({
@@ -26,7 +28,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 })
 export class ProductAdminComponent implements OnInit {
     selectedCategoryId: number  = 0; // Giá trị category được chọn
-    products: Product[] = [];        
+    products: Product[] = [];    
+    categories: Category[] = [];    
     currentPage: number = 0;
     itemsPerPage: number = 5;
     pages: number[] = [];
@@ -36,6 +39,7 @@ export class ProductAdminComponent implements OnInit {
     localStorage?:Storage;
 
     private productService = inject(ProductService);
+    private categoryService = inject(CategoryService);
     private router = inject(Router);
     private location = inject(Location);
 
@@ -46,13 +50,14 @@ export class ProductAdminComponent implements OnInit {
     }
     ngOnInit() {
       this.currentPage = Number(this.localStorage?.getItem('currentProductAdminPage')) || 0; 
+      this.getCategories(0, 10);
       this.getProducts(this.keyword, 
         this.selectedCategoryId, 
         this.currentPage, this.itemsPerPage);      
     }    
     searchProducts() {
       this.currentPage = 0;
-      this.itemsPerPage = 12;
+      this.itemsPerPage = 5;
       //Mediocre Iron Wallet
       debugger
       this.getProducts(this.keyword.trim(), this.selectedCategoryId, this.currentPage, this.itemsPerPage);
@@ -79,7 +84,21 @@ export class ProductAdminComponent implements OnInit {
         }
       });    
     }
-    
+    getCategories(page: number, limit: number) {
+      this.categoryService.getCategories(page, limit).subscribe({
+        next: (apiResponse: ApiResponse) => {
+          debugger;
+          this.categories = apiResponse.data;
+        },
+        complete: () => {
+          debugger;
+        },
+        error: (error: HttpErrorResponse) => {
+          debugger;
+          console.error(error?.error?.message ?? '');
+        } 
+      });
+    }
     onPageChange(page: number) {
       debugger;
       this.currentPage = page < 0 ? 0 : page;
@@ -114,22 +133,25 @@ export class ProductAdminComponent implements OnInit {
 
       this.router.navigate(['/admin/products/update', productId]);
     }  
-    deleteProduct(product: Product) {
-      console.log('Đang xóa sản phẩm:', product);  // Kiểm tra xem product có hợp lệ không
-    
-      const confirmation = window.confirm('Are you sure you want to delete this product?');
+    deleteProduct(product: Product) {      
+      const confirmation = window
+      .confirm('Are you sure you want to delete this product?');
       if (confirmation) {
+        debugger
         this.productService.deleteProduct(product.id).subscribe({
           next: (apiResponse: ApiResponse) => {
-            console.log('Xóa thành công', apiResponse);
-            // Cập nhật giao diện mà không cần reload trang
-            this.products = this.products.filter(p => p.id !== product.id);
+            debugger 
+            console.error('Xóa thành công')
+            location.reload();          
+          },
+          complete: () => {
+            debugger;          
           },
           error: (error: HttpErrorResponse) => {
-            console.error('Lỗi khi xóa:', error?.error?.message ?? 'Không xác định');
+            debugger;
+            console.error(error?.error?.message ?? '');
           }
-        });
-      }
-    }
-         
+        });  
+      }      
+    }      
 }
