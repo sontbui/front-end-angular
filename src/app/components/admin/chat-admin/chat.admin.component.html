@@ -1,33 +1,33 @@
 <div class="container py-4">
-    <div class="row">
+  <div class="row">
       <!-- Danh sách user và tin nhắn cuối -->
       <div class="col-md-4">
         <h4 class="text-primary mb-3">Danh sách người dùng</h4>
         <ul class="list-group shadow-sm">
-          @for(summary of userSummaries; track summary.userId) {
+              @for(summary of userSummaries; track summary.userId) {
             <li class="list-group-item d-flex justify-content-between align-items-center cursor-pointer"
                 [ngClass]="{ 'active bg-primary text-white': selectedUserId === summary.userId }"
-                (click)="selectUser(summary.userId)">
+                      (click)="selectUser(summary.userId)">
               <div>
                 <strong>{{ summary.fullName }}</strong><br>
                 <small>{{ summary.phoneNumber }}</small>
-              </div>
+                      </div>
               <small class="text-muted">{{ summary.lastMessageTime | date:'HH:mm:ss' }}</small>
-            </li>
-          }
-        </ul>
+                  </li>
+              }
+          </ul>
       </div>
-  
+
       <!-- Khung chat -->
       <div class="col-md-8">
-        @if(selectedUserId !== null) {
+          @if(selectedUserId !== null) {
           <div class="card shadow-sm">
             <div class="card-header bg-light">
               <h5 class="mb-0">Đoạn chat với người dùng</h5>
             </div>
   
             <div class="card-body chat-messages overflow-auto" #chatMessages style="height: 400px;">
-              @for (message of messages; track message.id) {
+                      @for (message of messages; track message.id) {
                 <div class="mb-3">
                   <div [ngClass]="{
                       'text-end': message.isSent,
@@ -44,24 +44,24 @@
                       <small class="text-muted">{{ message.timestamp | date:'HH:mm:ss' }}</small>
                     </div>
                   </div>
-                </div>
-              }
-            </div>
-  
+                          </div>
+                      }
+                  </div>
+
             <div class="card-footer bg-white">
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Nhập tin nhắn..."
-                       [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
+                             [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
                 <button class="btn btn-primary" (click)="sendMessage()">Gửi</button>
               </div>
-            </div>
-          </div>
-        } @else {
+                  </div>
+              </div>
+          } @else {
           <div class="alert alert-info text-center mt-4">
             Vui lòng chọn người dùng để bắt đầu trò chuyện.
           </div>
-        }
+          }
       </div>
-    </div>
   </div>
+</div>
   
