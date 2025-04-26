@@ -50,7 +50,7 @@ export class DetailProductComponent implements OnInit {
   ) {
 
   }
-  ngOnInit() {  
+  ngOnInit() {
     this.urlImg = environment.apiBaseUrl + '/products/images/';
 
     const idParam = this.activatedRoute.snapshot.paramMap.get('id');
@@ -70,7 +70,7 @@ export class DetailProductComponent implements OnInit {
       next: (apiResponse: ApiResponse) => {
         const response = apiResponse.data;
         if (response.product_images && response.product_images.length > 0) {
-          response.product_images.forEach((product_image: ProductImage) => { 
+          response.product_images.forEach((product_image: ProductImage) => {
             if (!product_image.isImageUrlUpdated) {
               product_image.image_url = `${environment.apiBaseUrl}/products/images/${product_image.image_url}`;
               product_image.isImageUrlUpdated = true;
@@ -101,8 +101,18 @@ export class DetailProductComponent implements OnInit {
   }
 
   openCompareDialog() {
+    if (!this.product) return;
+
+    // Lọc sản phẩm cùng loại (cùng category_id)
+    this.productsToCompare = this.productsToCompare.filter(p => p.category_id === this.product?.category_id);
+    if (this.productsToCompare.length === 0) {
+      alert('Không có sản phẩm nào cùng loại để so sánh.');
+      return;
+    }
+    this.selectedCompareProduct = undefined;
     this.showCompareDialog = true;
   }
+
 
   closeCompareDialog() {
     this.showCompareDialog = false;
@@ -123,7 +133,7 @@ export class DetailProductComponent implements OnInit {
   showImage(index: number): void {
     debugger
     if (this.product && this.product.product_images &&
-      this.product.product_images.length > 0) {   
+      this.product.product_images.length > 0) {
       if (index < 0) {
         index = 0;
       } else if (index >= this.product.product_images.length) {
@@ -135,7 +145,7 @@ export class DetailProductComponent implements OnInit {
   thumbnailClick(index: number) {
     debugger
 
-    this.currentImageIndex = index; 
+    this.currentImageIndex = index;
   }
   nextImage(): void {
     debugger
@@ -169,7 +179,7 @@ export class DetailProductComponent implements OnInit {
     }
   }
   updateQuantity(event: any) {
-  
+
     const inputValue = parseInt(event.target.value);
     if (!isNaN(inputValue) && inputValue != 0) {
       this.quantity = inputValue;

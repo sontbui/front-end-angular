@@ -32,9 +32,9 @@
                 <!-- <p class="product-description">{{ product.description }}</p> -->
                 <p class="product-price">
                   Giá:
-                 <del> {{ product.price | number:'1.0-0' }} đ</del>
+                 <del> {{ product.price | currency: 'VND' : true}}</del>
                   <span class="arrow">→</span>
-                 <span class="price-after"> {{ product.price * 0.95  | number:'1.0-0'}} đ
+                 <span class="price-after"> {{ product.price * 0.95  | currency: 'VND' : true}}
 
                  </span>
                 </p>
