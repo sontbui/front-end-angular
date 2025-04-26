@@ -59,7 +59,7 @@ export class ChatAdminComponent implements OnInit, AfterViewChecked, OnDestroy {
     private messageId = 0;
     apiBaseUrl = environment.apiBaseUrl;
     localStorage?: Storage;
-    adminId: number = 12; 
+    adminId: number = 19; 
 
     constructor(
         @Inject(DOCUMENT) private document: Document

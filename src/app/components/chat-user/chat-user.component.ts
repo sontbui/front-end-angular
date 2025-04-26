@@ -36,7 +36,7 @@ export class ChatUserComponent implements OnInit, AfterViewChecked, OnDestroy {
     apiBaseUrl = environment.apiBaseUrl;
     localStorage?: Storage;
     senderId?: number;
-    receiverId: number = 12;
+    receiverId: number = 19;
 
     constructor(
         private router: Router,
@@ -104,7 +104,7 @@ export class ChatUserComponent implements OnInit, AfterViewChecked, OnDestroy {
             };
             alert('Sending message: ' + JSON.stringify(chatMessage)); // Debugging alert
             this.chatService.sendMessage(chatMessage);
-            
+
             this.messages.push({
                 id: this.messageId++,
                 content: this.newMessage,
