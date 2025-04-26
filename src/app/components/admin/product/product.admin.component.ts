@@ -114,25 +114,22 @@ export class ProductAdminComponent implements OnInit {
 
       this.router.navigate(['/admin/products/update', productId]);
     }  
-    deleteProduct(product: Product) {      
-      const confirmation = window
-      .confirm('Are you sure you want to delete this product?');
+    deleteProduct(product: Product) {
+      console.log('Đang xóa sản phẩm:', product);  // Kiểm tra xem product có hợp lệ không
+    
+      const confirmation = window.confirm('Are you sure you want to delete this product?');
       if (confirmation) {
-        debugger
         this.productService.deleteProduct(product.id).subscribe({
           next: (apiResponse: ApiResponse) => {
-            debugger 
-            console.error('Xóa thành công')
-            location.reload();          
-          },
-          complete: () => {
-            debugger;          
+            console.log('Xóa thành công', apiResponse);
+            // Cập nhật giao diện mà không cần reload trang
+            this.products = this.products.filter(p => p.id !== product.id);
           },
           error: (error: HttpErrorResponse) => {
-            debugger;
-            console.error(error?.error?.message ?? '');
+            console.error('Lỗi khi xóa:', error?.error?.message ?? 'Không xác định');
           }
-        });  
-      }      
-    }      
+        });
+      }
+    }
+         
 }

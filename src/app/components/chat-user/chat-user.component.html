@@ -7,17 +7,17 @@
     <div class="chat-container shadow-sm">
         <div class="chat-messages" #chatMessages>
             @for (message of messages; track message.id) {
-                <div class="message" [ngClass]="{'sent': message.isSent, 'received': !message.isSent}">
-                    <p>{{ message.content }}</p>
-                    <span class="timestamp">{{ message.timestamp | date:'HH:mm:ss' }}</span>
-                </div>
+            <div class="message" [ngClass]="{'sent': message.isSent, 'received': !message.isSent}">
+                <p>{{ message.content }}</p>
+                <span class="timestamp">{{ message.timestamp | date:'HH:mm:ss' }}</span>
+            </div>
             }
         </div>
 
         <div class="chat-input d-flex align-items-center">
-            <input type="text" class="form-control message-input" placeholder="Type your message..." 
-                   [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
-            <button class="btn btn-primary ms-2" (click)="sendMessage()">Gửi</button>
+            <input type="text" class="form-control message-input" placeholder="Nhập tin nhắn..."
+                [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
+            <button class="btn btn-primary ms-2" (click)="sendMessage()" [disabled]="!newMessage.trim()">Gửi</button>
         </div>
     </div>
 </div>
