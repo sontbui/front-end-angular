@@ -64,16 +64,11 @@ export class OrderDetailComponent implements OnInit {
       next: (orders: OrderResponse1[]) => {
         this.orders = orders.map(order => ({
           ...order,
-          order_date: new Date(order.orderDate[0], order.orderDate[1] - 1, order.orderDate[2]),
-          shipping_date: new Date(order.shippingDate[0], order.shippingDate[1] - 1, order.shippingDate[2]),
-          order_details: order.orderDetails.map(detail => ({
+          orderDate: order.orderDate ? [order.orderDate[0], order.orderDate[1], order.orderDate[2]] : [],
+          shippingDate: order.shippingDate ? [order.shippingDate[0], order.shippingDate[1], order.shippingDate[2]] : [],
+          orderDetails: order.orderDetails.map(detail => ({
             ...detail,
-            product: {
-              id: detail.productId,
-              name: detail.productName,
-              thumbnail: `${environment.apiBaseUrl}/products/images/${detail.thumbnail}`,
-              price: detail.price
-            }
+            thumbnail: detail.thumbnail // giữ nguyên để HTML dùng đúng
           }))
         }));
       },
@@ -82,6 +77,7 @@ export class OrderDetailComponent implements OnInit {
       }
     });
   }
+  
 
   trackByOrder(index: number, order: OrderResponse): number {
     return order.id;

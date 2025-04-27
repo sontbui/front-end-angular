@@ -129,7 +129,7 @@ export class OrderComponent implements OnInit {
 
       if (!this.totalAmount || this.totalAmount <= 0) {
         console.error('Invalid total money:', this.totalAmount);
-        alert('Invalid total money! Please check your cart.');
+        alert('Tổng tiền không hợp lệ! Vui lòng kiểm tra lại giỏ hàng.');
         return;
       }
 
@@ -144,7 +144,7 @@ export class OrderComponent implements OnInit {
           },
           error: (error: HttpErrorResponse) => {
             console.error('Error saving pending order:', error?.error?.message ?? '');
-            alert('Error initiating VNPay payment. Please try again.');
+            alert('Có lỗi khi khởi tạo thanh toán VNPay. Vui lòng thử lại.');
           }
         });
       } else {
@@ -152,7 +152,7 @@ export class OrderComponent implements OnInit {
         this.orderService.placeOrder(this.orderData).subscribe({
           next: (response: ApiResponse) => {
             console.log('Order successfully');
-            alert('Order successfully');
+            alert('Đặt hàng thành công!');
             this.cartService.clearCart();
             this.router.navigate(['/']);
           },
@@ -161,13 +161,13 @@ export class OrderComponent implements OnInit {
           },
           error: (error: HttpErrorResponse) => {
             console.error(`Error: ${error?.error?.message ?? ''}`);
-            alert('Lost information. Please check information again !!!');
+            alert('Mất thông tin đơn hàng. Vui lòng kiểm tra lại!');
           },
         });
       }
     } else {
       console.error('Form is invalid');
-      alert('Please fill in all required fields correctly.');
+      alert('Vui lòng điền đầy đủ và chính xác các thông tin bắt buộc.');
     }
   }
 
@@ -181,12 +181,12 @@ export class OrderComponent implements OnInit {
           window.location.href = response.paymentUrl;
         } else {
           console.error('No payment URL returned');
-          alert('Failed to initiate VNPay payment. Please try again.');
+          alert('Không thể khởi tạo thanh toán VNPay. Vui lòng thử lại.');
         }
       },
       error: (error: HttpErrorResponse) => {
         console.error('VNPay API error:', error?.error?.message ?? '');
-        alert('Error initiating VNPay payment. Please try again.');
+        alert('Có lỗi khi khởi tạo thanh toán VNPay. Vui lòng thử lại.');
       }
     });
   }
@@ -212,13 +212,13 @@ export class OrderComponent implements OnInit {
     if (!this.totalAmount || this.totalAmount <= 0) {
       this.totalAmount = 0;
       console.error('Invalid total money:', this.totalAmount);
-      alert('Invalid total money! Please check your cart.');
+      alert('Tổng tiền không hợp lệ! Vui lòng kiểm tra lại giỏ hàng.');
       return;
     }
   }
 
   confirmDelete(index: number): void {
-    if (confirm('Do you want to remove this?')) {
+    if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')) {
       this.cartItems.splice(index, 1);
       this.updateCartFromCartItems();
       this.calculateTotal();
@@ -234,6 +234,10 @@ export class OrderComponent implements OnInit {
           next: (apiResponse: ApiResponse) => {
             this.totalAmount = apiResponse.data;
             this.couponApplied = true;
+            alert('Áp dụng mã giảm giá thành công!');
+          },
+          error: () => {
+            alert('Mã giảm giá không hợp lệ hoặc đã hết hạn.');
           }
         });
     }
