@@ -62,7 +62,6 @@ export class OrderAdminComponent implements OnInit{
         this.orders = apiResponse.data;
         this.totalPages = apiResponse.data.totalPages;
         this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
-        alert("adsad");
       },
       complete: () => {
         debugger;
