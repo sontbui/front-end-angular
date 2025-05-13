@@ -51,6 +51,7 @@ export class AdminComponent implements OnInit {
     this.userService.removeUserFromLocalStorage();
     this.tokenService.removeToken();
     this.userResponse = this.userService.getUserResponseFromLocalStorage();    
+    alert("Đăng xuất thành công");
     this.router.navigate(['/']);
   }
   showAdminComponent(componentName: string): void {

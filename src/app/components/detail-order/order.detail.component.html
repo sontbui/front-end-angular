@@ -1,8 +1,8 @@
 <app-header></app-header>
+
 <div class="container">
     <div class="intro-section">
         <h1>Danh sách đơn hàng đã đặt</h1>
-       
     </div>
 
     <div class="row">
@@ -13,7 +13,7 @@
                         <th scope="col">Đơn hàng ID</th>
                         <th scope="col">Họ và tên người nhận</th>
                         <th scope="col">Ngày đặt hàng</th>
-                        <th scope="col">Tổng giá </th>
+                        <th scope="col">Tổng giá</th>
                         <th scope="col">Trạng thái đơn hàng</th>
                         <th scope="col">Hành động</th>
                     </tr>
@@ -26,14 +26,18 @@
                         <td>{{ order.totalMoney | number:'1.2-2' }}</td>
                         <td>
                             <span class="status-badge" [ngClass]="{
-                                'status-open': order.status === 'shipped',
-                                'status-pending': order.status === 'pending'
-                            }">
-                                {{ order.status }}
+                                'status-pending': order.status === 'pending',
+                                'status-processing': order.status === 'processing',
+                                'status-shipped': order.status === 'shipped',
+                                'status-delivered': order.status === 'delivered',
+                                'status-cancelled': order.status === 'cancelled'
+                              }">
+                                {{ getStatusText(order.status) }}
                             </span>
                         </td>
                         <td>
-                            <button class="btn-new-ticket" (click)="showOrderDetails(order.id)">Xem chi tiết</button>
+                            <button class="btn-new-ticket" (click)="showOrderDetails(order.id)" data-bs-toggle="modal"
+                                data-bs-target="#orderDetailsModal">Xem chi tiết</button>
                         </td>
                     </tr>
                 </tbody>
@@ -41,7 +45,6 @@
         </div>
     </div>
 
-    <!-- The rest of your code (Order Information and Products in Order sections) remains unchanged -->
     <div *ngIf="selectedOrder">
         <div class="row mt-5">
             <div class="col-md-6">
@@ -84,8 +87,8 @@
                         <tr *ngFor="let item of selectedOrder.orderDetails;">
                             <td>
                                 <div class="product-info">
+                                    <span class="product-name" style="color: black;">{{ item.productName }}</span>
                                     <img [src]="urlImg + item.thumbnail" alt="Product Image" class="product-image">
-                                    <span class="product-name">{{ item.productName }}</span>
                                 </div>
                             </td>
                             <td>{{ item.numberOfProducts }}</td>
@@ -95,10 +98,13 @@
                     </tbody>
                 </table>
                 <div class="text-start mt-3">
-                    <h4 class="header-text text-end">Tổng giá trị đơn hàng: {{ selectedOrder.totalMoney | number:'1.2-2' }} đ</h4>
+                    <h4 class="header-text text-end">Tổng giá trị đơn hàng: {{ selectedOrder.totalMoney | number:'1.2-2'
+                        }} đ</h4>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
+
 <app-footer></app-footer>

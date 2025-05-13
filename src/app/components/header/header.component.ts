@@ -84,6 +84,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
+      alert('Đăng xuất thành công');
     }
     this.isPopoverOpen = false;
   }

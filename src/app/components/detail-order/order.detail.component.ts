@@ -77,20 +77,32 @@ export class OrderDetailComponent implements OnInit {
       }
     });
   }
-  
-
   trackByOrder(index: number, order: OrderResponse): number {
     return order.id;
   }
-
   trackByFn(index: number, item: OrderDetail): number {
     return item.product.id;
   }
-
-
   showOrderDetails(orderId: number): void {
     const foundOrder = this.orders.find((order: OrderResponse1) => order.id === orderId);
     this.selectedOrder = foundOrder || null;
     console.log(this.selectedOrder);
   }
+  getStatusText(status: string): string {
+    switch (status) {
+      case 'pending':
+        return 'Chờ xử lý';
+      case 'processing':
+        return 'Đang xử lý';
+      case 'shipped':
+        return 'Đã gửi hàng';
+      case 'delivered':
+        return 'Đã giao';
+      case 'cancelled':
+        return 'Đã huỷ';
+      default:
+        return 'Không xác định';
+    }
+  }
+  
 }

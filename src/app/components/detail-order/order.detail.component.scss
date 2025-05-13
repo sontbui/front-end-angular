@@ -108,3 +108,28 @@ td {
     color: white;
     margin-right: 10px;
 }
+.status-pending {
+    background-color: #f0ad4e;
+    color: white;
+  }
+  
+  .status-processing {
+    background-color: #5bc0de;
+    color: white;
+  }
+  
+  .status-shipped {
+    background-color: #5cb85c;
+    color: white;
+  }
+  
+  .status-delivered {
+    background-color: #0275d8;
+    color: white;
+  }
+  
+  .status-cancelled {
+    background-color: #d9534f;
+    color: white;
+  }
+  

@@ -97,14 +97,14 @@ export class OrderAdminComponent implements OnInit{
 
   deleteOrder(id:number) {
     const confirmation = window
-      .confirm('Are you sure you want to delete this order?');
+      .confirm('Xoá đơn hàng này?');
     if (confirmation) {
       debugger
       this.orderService.deleteOrder(id).subscribe({
         next: (response: ApiResponse) => {
           debugger 
           const confirmation = window
-      .confirm('Delete successfull');
+      .confirm('Xoá thành công!');
           location.reload();          
         },
         complete: () => {

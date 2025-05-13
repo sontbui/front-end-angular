@@ -25,7 +25,7 @@
               class="badge" 
               [ngClass]="{
                 'bg-success': user.is_active,
-                'bg-secondary': !user.is_active
+                'bg-danger': !user.is_active
               }">
               {{ user.is_active ? 'Đang hoạt động' : 'Bị khóa' }}
             </span>
@@ -54,3 +54,18 @@
     </tbody>
   </table>
 </div>
+<!-- Thêm phần phân trang sau bảng người dùng -->
+<div class="d-flex justify-content-center mt-3">
+  <ul class="pagination">
+    <li class="page-item" [class.disabled]="currentPage === 0">
+      <a class="page-link" (click)="onPageChange(currentPage - 1)">Trang trước</a>
+    </li>
+    <li class="page-item" *ngFor="let page of visiblePages" [class.active]="page === currentPage">
+      <a class="page-link" (click)="onPageChange(page)">{{ page + 1 }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+      <a class="page-link" (click)="onPageChange(currentPage + 1)">Trang sau</a>
+    </li>
+  </ul>
+</div>
+

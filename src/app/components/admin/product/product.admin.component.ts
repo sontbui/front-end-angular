@@ -154,4 +154,5 @@ export class ProductAdminComponent implements OnInit {
         });  
       }      
     }      
-}
+  }
+  
