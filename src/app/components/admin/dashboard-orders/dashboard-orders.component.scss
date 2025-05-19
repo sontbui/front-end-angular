@@ -1,0 +1,128 @@
+/* Loading overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Sidebar lọc */
+.filter-sidebar {
+  width: 240px;
+  background: #f9fafb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.filter-sidebar label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.filter-sidebar select.form-select {
+  border-radius: 12px;
+  transition: border-color 0.3s ease;
+}
+
+.filter-sidebar select.form-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 6px #2563eb88;
+}
+
+/* Main content */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.main-content .card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.main-content .card .card-body {
+  padding: 1.5rem;
+}
+
+/* Top users card */
+.highest-income-users {
+  background: #fff;
+  border-radius: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1f2937;
+}
+
+.highest-income-users h5 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.highest-income-users .ranking-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.highest-income-users .ranking-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+  background-color: #f9fafb;
+  transition: background-color 0.2s ease;
+}
+
+.highest-income-users .ranking-list li:hover {
+  background-color: #eff6ff;
+}
+
+.highest-income-users .ranking-list .user-name {
+  font-weight: 600;
+  color: #374151;
+}
+
+.highest-income-users .ranking-list .user-income {
+  color: #2563eb;
+  font-weight: 700;
+  font-feature-settings: "tnum";
+}
+
+/* Rank backgrounds */
+.rank-1 {
+  background: linear-gradient(135deg, #ffffff, #fde68a); /* vàng nhạt */
+}
+
+.rank-2 {
+  background: linear-gradient(135deg, #ffffff, #689ae6); /* xanh dương */
+}
+
+.rank-3 {
+  background: linear-gradient(135deg, #ffffff, #8bf7b1); /* xanh lá nhạt */
+}
+
+/* Text colors for ranks */
+.text-gold {
+  color: #ffa200; /* vàng */
+}
+
+.text-silver {
+  color: #63676e; /* bạc */
+}
+
+.text-bronze {
+  color: #cd7a26; /* đồng */
+}

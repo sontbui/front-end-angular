@@ -1,0 +1,59 @@
+<div class="container mt-4 d-flex">
+  <!-- Sidebar filter -->
+  <div class="filter-sidebar" [class.open]="showFilterSidebar">
+
+    <!-- Chọn loại biểu đồ -->
+    <div class="mb-3">
+      <label class="form-label">Loại biểu đồ</label>
+      <select class="form-select" [(ngModel)]="selectedChartType" (change)="updateChartType()">
+        <option value="line">Biểu đồ đường</option>
+        <option value="bar">Biểu đồ cột</option>
+      </select>
+    </div>
+
+    <!-- Lọc trạng thái -->
+    <label for="statusFilter" class="form-label">Lọc theo trạng thái</label>
+    <select class="form-select" [(ngModel)]="selectedStatus" (change)="applyFilters()">
+      <option value="">Tất cả</option>
+      <option value="pending">Chờ xử lý</option>
+      <option value="processing">Đang xử lý</option>
+      <option value="shipped">Đã giao</option>
+      <option value="delivered">Đã nhận</option>
+      <option value="cancelled">Đã huỷ</option>
+    </select>
+
+    <!-- Lọc theo tháng -->
+    <label class="form-label mt-3">Tháng</label>
+    <select class="form-select" [(ngModel)]="filterMonth" (change)="applyFilters()">
+      <option value="">Tất cả</option>
+      <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+    </select>
+
+    <!-- Lọc theo năm -->
+    <label class="form-label mt-3">Năm</label>
+    <select class="form-select" [(ngModel)]="filterYear" (change)="applyFilters()">
+      <option value="">Tất cả</option>
+      <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+    </select>
+  </div>
+
+  <!-- Nội dung chính -->
+  <div class="main-content flex-grow-1 ms-3">
+    <!-- Thống kê nhanh -->
+    <div class="row text-white mb-4">
+      <div class="col-md-3" *ngFor="let item of summary">
+        <div class="p-3 rounded shadow-sm" [ngClass]="item.bgClass">
+          <h5>{{ item.label }}</h5>
+          <h3>{{ item.value }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Biểu đồ -->
+    <div class="card">
+      <div class="card-body">
+        <canvas id="orderStatusChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

@@ -29,7 +29,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
     FormsModule
   ]
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   @ViewChild('loginForm') loginForm!: NgForm;
 
   /*
@@ -51,9 +51,9 @@ export class LoginComponent implements OnInit{
   password: string = '';
   showPassword: boolean = false;
 
-  roles: Role[] = []; 
+  roles: Role[] = [];
   rememberMe: boolean = true;
-  selectedRole: Role | undefined; 
+  selectedRole: Role | undefined;
   userResponse?: UserResponse
 
   onPhoneNumberChange() {
@@ -117,12 +117,11 @@ export class LoginComponent implements OnInit{
                 date_of_birth: new Date(apiResponse2.data.date_of_birth),
               };
               this.userService.saveUserResponseToLocalStorage(this.userResponse);
-              if(this.userResponse?.role.name == 'admin') {
+              if (this.userResponse?.role.name == 'admin') {
                 this.router.navigate(['/admin']);
-              } else if(this.userResponse?.role.name == 'user') {
+              } else if (this.userResponse?.role.name == 'user') {
                 this.router.navigate(['/']);
               }
-
             },
             complete: () => {
               this.cartService.refreshCart();
@@ -141,7 +140,13 @@ export class LoginComponent implements OnInit{
       error: (error: HttpErrorResponse) => {
         debugger;
         console.error(error?.error?.message ?? '');
-        alert('Wrong information');
+        const errorMsg = error?.error?.message ?? 'Đăng nhập thất bại';
+        if (errorMsg.includes('khóa')) {
+          alert('Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.');
+        } else {
+          alert(errorMsg);
+        }
+
       }
     });
   }

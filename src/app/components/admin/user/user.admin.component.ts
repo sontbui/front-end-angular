@@ -110,9 +110,10 @@ export class UserAdminComponent implements OnInit {
         //location.reload();
       },
       complete: () => {
-        // Handle complete event
+        alert('Đặt lại mật khẩu thành công');
       },
       error: (error: HttpErrorResponse) => {
+        alert
         debugger;
         console.error(error?.error?.message ?? '');
       }

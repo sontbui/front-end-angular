@@ -1,68 +1,68 @@
 <div class="container-fluid">
-    <header class="header bg-secondary text-white d-flex justify-content-between">
-      <h1 class="header-title">Quản lý cửa hàng</h1>
-      <h1 class="header-title"> Chào mừng {{firstName}}</h1>
-      <!-- Logout Button -->
-      <button class="btn btn-danger btn-sm logout" (click)="logout()">Đăng xuất</button>
-    </header>
-    <div class="row">
-      <nav id="sidebar" class="col-md-2 col-lg-2 d-md-block bg-secondary sidebar">
-        <div class="position-sticky">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link" id="test_dashboard"
-                (click)="showAdminComponent('dashboard')"
-                routerLink="/admin/dashboard"
-                routerLinkActive="active">
-                <i class="fas fa-chart-pie icon"></i>Thống kê
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="test_order"
-                (click)="showAdminComponent('orders')"
-                routerLink="/admin/orders"
-                routerLinkActive="active">
-                <i class="fas fa-shopping-cart icon"></i>Đơn hàng
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="test_categories"
-                (click)="showAdminComponent('categories')"
-                  routerLink="/admin/categories"
-                  routerLinkActive="active">
-                  <i class="fas fa-tags icon"></i>Phân loại
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="test_product"
-                (click)="showAdminComponent('products')"
-                routerLink="/admin/products"
-                routerLinkActive="active">
-                <i class="fas fa-box icon"></i>Sản phẩm
-              </a>
-            </li>
-         
-            <li class="nav-item">
-              <a class="nav-link" id="test_user"
-                (click)="showAdminComponent('users')"
-                routerLink="/admin/chat"
-                routerLinkActive="active">
-                <i class="fas fa-users icon"></i>Người dùng
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="test_user"
-                (click)="showAdminComponent('chat-admin')"
-                routerLink="/admin/chat-admin"
-                routerLinkActive="active">
-                <i class="fas fa-clipboard-list icon"></i>Xử lý đơn hàng
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div class="col-md-10 col-lg-10 overflow-auto">
-        <router-outlet></router-outlet>
+  <!-- <header class="header bg-secondary text-white d-flex justify-content-between">
+    <h1 class="header-title">Quản lý cửa hàng</h1>
+    <h1 class="header-title"> Chào mừng {{firstName}}</h1>
+
+    <button class="btn btn-danger btn-sm logout" (click)="logout()">Đăng xuất</button>
+  </header> -->
+  <div class="row">
+    <nav id="sidebar" class="col-md-2 col-lg-2 d-md-block bg-secondary sidebar">
+      <div class="position-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" id="test_dashboard" (click)="showAdminComponent('dashboard')"
+              routerLink="/admin/dashboard" routerLinkActive="active">
+              <i class="fas fa-tasks icon"></i>Tiến độ đơn hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="test_dashboardOder" (click)="showAdminComponent('dashboardOder')"
+              routerLink="/admin/dashboard-orders" routerLinkActive="active">
+              <i class="fas fa-chart-line icon"></i>Thống kê thu nhập
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="test_order" (click)="showAdminComponent('orders')" routerLink="/admin/orders"
+              routerLinkActive="active">
+              <i class="fas fa-shopping-cart icon"></i>Đơn hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="test_categories" (click)="showAdminComponent('categories')"
+              routerLink="/admin/categories" routerLinkActive="active">
+              <i class="fas fa-tags icon"></i>Phân loại
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="test_product" (click)="showAdminComponent('products')" routerLink="/admin/products"
+              routerLinkActive="active">
+              <i class="fas fa-box icon"></i>Sản phẩm
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" id="test_user" (click)="showAdminComponent('users')" routerLink="/admin/chat"
+              routerLinkActive="active">
+              <i class="fas fa-users icon"></i>Người dùng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="test_user" (click)="showAdminComponent('chat-admin')" routerLink="/admin/chat-admin"
+              routerLinkActive="active">
+              <i class="fas fa-clipboard-list icon"></i>Xử lý đơn hàng
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " (click)="logout()">
+              <i class="fas fa-sign-out-alt me-1"></i> Đăng xuất
+            </a>
+          </li>
+
+        </ul>
       </div>
+    </nav>
+    <div class="col-md-10 col-lg-10 overflow-auto">
+      <router-outlet></router-outlet>
     </div>
   </div>
+</div>

@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { provideRouter } from '@angular/router';
 import { inject } from '@angular/core';
 
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -20,7 +21,7 @@ import { inject } from '@angular/core';
   imports: [       
     CommonModule,    
     RouterModule,
-    //FormsModule
+    FormsModule
   ],
   
   
@@ -66,6 +67,10 @@ export class AdminComponent implements OnInit {
       this.router.navigate(['/admin/users']);
     } else if (componentName === 'chat-admin') {
       this.router.navigate(['/admin/chat-admin']);
+    }else if (componentName === 'dashboard') {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (componentName === 'dashboard-orders') {
+      this.router.navigate(['/admin/dashboard-orders']);
     }
   }
 }
