@@ -161,6 +161,7 @@ export class OrderComponent implements OnInit {
           },
           error: (error: HttpErrorResponse) => {
             console.error(`Error: ${error?.error?.message ?? ''}`);
+            
             alert('Mất thông tin đơn hàng. Vui lòng kiểm tra lại!');
           },
         });

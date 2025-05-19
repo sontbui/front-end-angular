@@ -32,9 +32,9 @@
                 <!-- <p class="product-description">{{ product.description }}</p> -->
                 <p class="product-price">
                   Giá:
-                 <del> {{ product.price | currency: 'VND' : true}}</del>
+                 <del> {{ product.price | currency: 'VND' : "symbol"}}</del>
                   <span class="arrow">→</span>
-                 <span class="price-after"> {{ product.price * 0.95  | currency: 'VND' : true}}
+                 <span class="price-after"> {{ product.price * 0.95  | currency: 'VND' : "symbol"}}
 
                  </span>
                 </p>
@@ -49,7 +49,7 @@
       <ul class="pagination">
         @if(currentPage > 0) {
           <li class="page-item">
-            <a class="page-link" (click)="onPageChange(0)">First</a>
+            <a class="page-link" (click)="onPageChange(0)">Trang đầu</a>
           </li>
         }
         @if(currentPage > 0) {
@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="page-item">
-            <a class="page-link" (click)="onPageChange(totalPages - 1)">Last</a>
+            <a class="page-link" (click)="onPageChange(totalPages - 1)">Cuối</a>
           </li>
          }
       </ul>

@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 export class OrderAdminComponent implements OnInit{  
   orders: OrderResponse[] = [];
   currentPage: number = 0;
-  itemsPerPage: number = 12;
+  itemsPerPage: number =12;
   pages: number[] = [];
   totalPages:number = 0;
   keyword:string = "";
@@ -43,8 +43,9 @@ export class OrderAdminComponent implements OnInit{
   }
   ngOnInit(): void {
     debugger
+    this.currentPage = Number(this.localStorage?.getItem('currentOrderAdminPage')) || 0;
     this.getAllOrders(this.keyword, this.currentPage, this.itemsPerPage);
-    this.currentPage = Number(this.localStorage?.getItem('currentOrderAdminPage')) || 0; 
+     
     
   }
   searchOrders() {
@@ -56,10 +57,17 @@ export class OrderAdminComponent implements OnInit{
   }
   getAllOrders(keyword: string, page: number, limit: number) {
     debugger
+
     this.orderService.getAllOrders(keyword, page, limit).subscribe({
       next: (apiResponse: ApiResponse) => {
         debugger        
-        this.orders = apiResponse.data;
+        this.orders = apiResponse.data.orders.map(order => ({
+        ...order,
+        order_date: order.order_date && Array.isArray(order.order_date) 
+          ? new Date(order.order_date[0], order.order_date[1] - 1, order.order_date[2]) 
+          : null
+      }));
+        this.orders = apiResponse.data.orders;
         this.totalPages = apiResponse.data.totalPages;
         this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
       },
@@ -97,14 +105,14 @@ export class OrderAdminComponent implements OnInit{
 
   deleteOrder(id:number) {
     const confirmation = window
-      .confirm('Are you sure you want to delete this order?');
+      .confirm('Xoá đơn hàng này?');
     if (confirmation) {
       debugger
       this.orderService.deleteOrder(id).subscribe({
         next: (response: ApiResponse) => {
           debugger 
           const confirmation = window
-      .confirm('Delete successfull');
+      .confirm('Xoá thành công!');
           location.reload();          
         },
         complete: () => {

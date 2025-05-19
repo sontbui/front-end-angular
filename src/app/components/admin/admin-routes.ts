@@ -12,6 +12,9 @@ import { InsertCategoryAdminComponent } from "./category/insert/insert.category.
 import { UpdateCategoryAdminComponent } from "./category/update/update.category.admin.component";
 import { UserAdminComponent } from "./user/user.admin.component";
 import { ChatAdminComponent } from "./chat-admin/chat.admin.component";
+import { DashboardComponent } from "./dashboard/dashboard.component";
+import { DashboardOrdersComponent } from "./dashboard-orders/dashboard-orders.component";
+
 
 export const adminRoutes: Routes = [
     {
@@ -60,6 +63,15 @@ export const adminRoutes: Routes = [
                 path: 'chat-admin',
                 component: ChatAdminComponent
             }, 
+            {
+                path: 'dashboard',
+                component: DashboardComponent
+            },
+            {
+                path:'dashboard-orders',
+                component: DashboardOrdersComponent
+            }
+
         ]
     }
 ];

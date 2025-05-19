@@ -56,7 +56,7 @@ export class CategoryAdminComponent implements OnInit {
     }  
     deleteCategory(category: Category) {      
       const confirmation = window
-      .confirm('Are you sure you want to delete this category?');
+      .confirm('Bạn có chắc chắn muốn xóa danh mục này không?');
       if (confirmation) {
         debugger
         this.categoryService.deleteCategory(category.id).subscribe({
@@ -70,6 +70,7 @@ export class CategoryAdminComponent implements OnInit {
           },
           error: (error: HttpErrorResponse) => {
             debugger;
+            alert('Không thể xóa danh mục!');
             console.error(error?.error?.message ?? '');
           }          
         });  

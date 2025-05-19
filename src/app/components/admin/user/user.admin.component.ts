@@ -11,32 +11,32 @@ import { ApiResponse } from '../../../responses/api.response';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-user.admin',    
+  selector: 'app-user.admin',
   templateUrl: './user.admin.component.html',
   styleUrl: './user.admin.component.scss',
   standalone: true,
-  imports: [   
+  imports: [
     CommonModule,
     FormsModule,
   ]
 })
-export class UserAdminComponent implements OnInit{
+export class UserAdminComponent implements OnInit {
   userService = inject(UserService);
   router = inject(Router)
   route = inject(ActivatedRoute);
-  
-  users: UserResponse[] = [];        
+
+  users: UserResponse[] = [];
   currentPage: number = 0;
   itemsPerPage: number = 12;
   pages: number[] = [];
-  totalPages:number = 0;
+  totalPages: number = 0;
   visiblePages: number[] = [];
-  keyword:string = "";
-  localStorage?:Storage;
-  
+  keyword: string = "";
+  localStorage?: Storage;
+
   constructor(
-      //private location: Location,
-      @Inject(DOCUMENT) private document: Document
+    //private location: Location,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.localStorage = document.defaultView?.localStorage;
   }
@@ -44,21 +44,23 @@ export class UserAdminComponent implements OnInit{
     this.currentPage = Number(this.localStorage?.getItem('currentUserAdminPage')) || 0;
     this.getUsers(this.keyword, this.currentPage, this.itemsPerPage);
   }
-  
+
   searchUsers() {
     this.currentPage = 0;
     this.itemsPerPage = 12;
     this.getUsers(this.keyword.trim(), this.currentPage, this.itemsPerPage);
   }
-  
+
   getUsers(keyword: string, page: number, limit: number) {
-    this.userService.getUsers({ keyword, page, limit }).subscribe({      
-      next: (apiResponse: ApiResponse) => {        
+    this.userService.getUsers({ keyword, page, limit }).subscribe({
+      next: (apiResponse: ApiResponse) => {
         debugger
         const response = apiResponse.data
         this.users = response.users;
         this.totalPages = response.totalPages;
         this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
+        console.log('Users:', apiResponse.data.users);
+        console.log('Total Pages:', apiResponse.data.totalPages);
       },
       complete: () => {
         // Handle complete event
@@ -67,44 +69,75 @@ export class UserAdminComponent implements OnInit{
       error: (error: HttpErrorResponse) => {
         debugger;
         console.error(error?.error?.message ?? '');
-      } 
+      }
     });
   }
-  
+
   onPageChange(page: number) {
     this.currentPage = page < 0 ? 0 : page;
     this.localStorage?.setItem('currentUserAdminPage', String(this.currentPage));
     this.getUsers(this.keyword, this.currentPage, this.itemsPerPage);
   }
-  
-    generateVisiblePageArray(currentPage: number, totalPages: number): number[] {
-      const maxVisiblePages = 5;
-      const halfVisiblePages = Math.floor(maxVisiblePages / 2);
-    
-      let startPage = Math.max(currentPage - halfVisiblePages, 1);
-      let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
-    
-      if (endPage - startPage + 1 < maxVisiblePages) {
-        startPage = Math.max(endPage - maxVisiblePages + 1, 1);
-      }
-    
-      return new Array(endPage - startPage + 1).fill(0)
-        .map((_, index) => startPage + index);
+
+  generateVisiblePageArray(currentPage: number, totalPages: number): number[] {
+    const maxVisiblePages = 5;
+    const halfVisiblePages = Math.floor(maxVisiblePages / 2);
+
+    let startPage = Math.max(currentPage - halfVisiblePages, 1);
+    let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(endPage - maxVisiblePages + 1, 1);
     }
-    
-    insertUser() {
-      debugger
-      this.router.navigate(['/admin/users/insert']);
-    } 
-    updateUser(userId: number) {
-      debugger
-      this.router.navigate(['/admin/users/update', userId]);
-    }  
-    resetPassword(userId: number) {
-      this.userService.resetPassword(userId).subscribe({
-        next: (apiResponse: ApiResponse) => {
+
+    return new Array(endPage - startPage + 1).fill(0)
+      .map((_, index) => startPage + index)
+      .filter(page => page <= totalPages);
+  }
+
+  insertUser() {
+    debugger
+    this.router.navigate(['/admin/users/insert']);
+  }
+  updateUser(userId: number) {
+    debugger
+    this.router.navigate(['/admin/users/update', userId]);
+  }
+  resetPassword(userId: number) {
+    this.userService.resetPassword(userId).subscribe({
+      next: (apiResponse: ApiResponse) => {
+        console.error('Block/unblock user successfully');
+        //location.reload();
+      },
+      complete: () => {
+        alert('Đặt lại mật khẩu thành công');
+      },
+      error: (error: HttpErrorResponse) => {
+        alert
+        debugger;
+        console.error(error?.error?.message ?? '');
+      }
+    });
+  }
+
+  toggleUserStatus(user: UserResponse) {
+    let confirmation: boolean;
+    if (user.is_active) {
+      confirmation = window.confirm('Khoá tài khoản này?');
+    } else {
+      confirmation = window.confirm('Mở khoá tài khoản này?');
+    }
+
+    if (confirmation) {
+      const params = {
+        userId: user.id,
+        enable: !user.is_active
+      };
+
+      this.userService.toggleUserStatus(params).subscribe({
+        next: (response: any) => {
           console.error('Block/unblock user successfully');
-          //location.reload();
+          location.reload();
         },
         complete: () => {
           // Handle complete event
@@ -112,37 +145,8 @@ export class UserAdminComponent implements OnInit{
         error: (error: HttpErrorResponse) => {
           debugger;
           console.error(error?.error?.message ?? '');
-        } 
+        }
       });
     }
-  
-    toggleUserStatus(user: UserResponse) {
-      let confirmation: boolean;
-      if (user.is_active) {
-        confirmation = window.confirm('Are you sure you want to block this user?');
-      } else {
-        confirmation = window.confirm('Are you sure you want to enable this user?');
-      }
-      
-      if (confirmation) {
-        const params = {
-          userId: user.id,
-          enable: !user.is_active
-        };
-    
-        this.userService.toggleUserStatus(params).subscribe({
-          next: (response: any) => {
-            console.error('Block/unblock user successfully');
-            location.reload();
-          },
-          complete: () => {
-            // Handle complete event
-          },
-          error: (error: HttpErrorResponse) => {
-            debugger;
-            console.error(error?.error?.message ?? '');
-          } 
-        });
-      }      
-    }
+  }
 }

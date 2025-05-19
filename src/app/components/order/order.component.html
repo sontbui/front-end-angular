@@ -109,11 +109,11 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <del class="price-original">{{ ((item.product.price) * item.quantity) | currency: 'VND' : true }}</del>
+                                        <del class="price-original">{{ ((item.product.price) * item.quantity) | currency: 'VND' : "symbol" }}</del>
                                     </td>
                                     <td><span class="arrow">→</span></td>
                                     <td class="price-after">
-                                        {{ ((item.product.price * 0.95) * item.quantity) | currency: 'VND' : true }} 
+                                        {{ ((item.product.price * 0.95) * item.quantity) | currency: 'VND' : "symbol" }} 
                                     </td>
                                     <td>
                                         <button class="btn btn-danger" (click)="confirmDelete(i)">Xóa</button>
@@ -126,7 +126,7 @@
 
                 <div class="text-start mt-3 coupon-and-price-container">
                     <h4 class="header-text text-end total-price">
-                        Tổng giá trị đơn hàng: {{ totalAmount | currency: 'VND' : true }}
+                        Tổng giá trị đơn hàng: {{ totalAmount | currency: 'VND' : "symbol" }}
                     </h4>
                 </div>
 

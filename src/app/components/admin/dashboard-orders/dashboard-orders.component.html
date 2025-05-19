@@ -1,0 +1,126 @@
+<!-- Loading overlay -->
+<div *ngIf="loading" class="loading-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div *ngIf="!loading" class="container mt-4 d-flex flex-column gap-4" style="height: auto;">
+  <!-- Card lọc + thống kê -->
+  <div class="card shadow-sm rounded-4 p-4 d-flex flex-row gap-4 align-items-start">
+    <!-- Sidebar lọc -->
+    <div class="filter-sidebar">
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Loại biểu đồ</label>
+        <select class="form-select" [(ngModel)]="selectedChartType" (change)="updateChartType()">
+          <option value="line">Biểu đồ đường</option>
+          <option value="bar">Biểu đồ cột</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Năm</label>
+        <select class="form-select" [(ngModel)]="filterYear" (change)="applyFilters()">
+          <option value="">Tất cả các năm</option>
+          <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label fw-semibold">Người dùng</label>
+        <select class="form-select" [(ngModel)]="filterUser" (change)="applyFilters()">
+          <option value="">Tất cả người dùng</option>
+          <option *ngFor="let u of users" [value]="u.id">{{ u.fullname }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Vertical Divider -->
+    <div class="vr" style="height: 100%; width: 2px; background-color: #dee2e6;"></div>
+
+    <!-- Thống kê -->
+    <div class="flex-grow-1 d-flex flex-column gap-4">
+      <h5 class="mb-2 text-primary fw-bold text-center">
+        <ng-container *ngIf="!filterUser; else userStats">
+          🏆 Top 3 Người dùng tiêu dùng nhiều nhất
+        </ng-container>
+        <ng-template #userStats>
+          📊 Thống kê nhanh người dùng
+        </ng-template>
+      </h5>
+
+      <ng-container *ngIf="!filterUser">
+        <ng-container *ngIf="top3Users?.length; else noUser">
+          <div class="d-flex flex-column gap-3">
+            <div *ngFor="let user of top3Users; let i = index" class="card p-3 shadow-sm"
+              [ngClass]="{ 'rank-1': i === 0, 'rank-2': i === 1, 'rank-3': i === 2 }">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="fw-semibold d-flex align-items-center gap-2" [ngClass]="{
+                      'text-gold': i === 0,
+                      'text-silver': i === 1,
+                      'text-bronze': i === 2
+                    }">
+                    <ng-container [ngSwitch]="i">
+                      <i *ngSwitchCase="0" class="fas fa-medal" title="Hạng 1" style="color: #f59e0b;"></i>
+                      <i *ngSwitchCase="1" class="fas fa-medal" title="Hạng 2" style="color: #9ca3af;"></i>
+                      <i *ngSwitchCase="2" class="fas fa-medal" title="Hạng 3" style="color: #cd7f32;"></i>
+                      <i *ngSwitchDefault class="fas fa-medal" style="visibility: hidden;"></i>
+                    </ng-container>
+                    {{ i + 1 }}. {{ user.fullname }}
+                  </div>
+
+                </div>
+                <div [ngClass]="{
+                    'text-gold': i === 0,
+                    'text-silver': i === 1,
+                    'text-bronze': i === 2
+                  }" class="fw-bold">
+                  {{ user.income | currency: 'VND' : 'symbol' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noUser>
+          <p class="text-muted">Chưa có dữ liệu phù hợp.</p>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="filterUser">
+        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+          <div class="row text-center" style="width: 100%; max-width: 900px;">
+            <div class="col-md-4 mb-3 mb-md-0 d-flex justify-content-center">
+              <div class="p-4 rounded shadow-sm"
+                style="height: 120px; width: 100%; max-width: 250px; background-color: #3b5998;">
+                <!-- màu xanh đậm hơn -->
+                <h5 class="mb-2 flex-wrap" style="font-weight: 600; color: #ffffff;">Người dùng</h5>
+                <h3 class="text-white flex-wrap">{{ userMap[filterUser] || 'Không rõ' }}</h3>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0 d-flex justify-content-center">
+              <div class="p-4 rounded shadow-sm"
+                style="height: 120px; width: 100%; max-width: 250px; background-color: #2e7d32;"> <!-- xanh lá đậm -->
+                <h5 class="mb-2 flex-wrap" style="font-weight: 600; color: #ffffff;">Số lượng đơn hàng</h5>
+                <h3 class="text-white flex-wrap">{{ userOrderCount || 0 }}</h3>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+              <div class="p-4 rounded shadow-sm"
+                style="height: 120px; width: 100%; max-width: 250px; background-color: #0288d1;"> <!-- xanh biển đậm -->
+                <h5 class="mb-2 flex-wrap" style="font-weight: 600; color: #ffffff;">Tổng thu nhập</h5>
+                <h3 class="text-white flex-wrap">{{ userTotalIncome | currency: 'VND': 'symbol' }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Biểu đồ -->
+  <div class="card shadow-sm rounded-4 w-100">
+    <div class="card-body p-4">
+      <canvas id="incomeMonthChart" style="max-height: 400px; width: 100%;"></canvas>
+    </div>
+  </div>
+</div>
