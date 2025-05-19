@@ -10,6 +10,7 @@ import { UpdateUserDTO } from '../dtos/user/update.user.dto';
 import { DOCUMENT } from '@angular/common';
 import { inject } from '@angular/core';
 import { ApiResponse } from '../responses/api.response';
+import { ADMIN_TOKEN } from '../constans';
 
 @Injectable({
   providedIn: 'root'
@@ -105,7 +106,7 @@ export class UserService {
     return this.http.get<ApiResponse>(url, { params: params });
   }
   getUsersWithToken(params: { page: number, limit: number, keyword: string }) {
-  const token = 'eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjEyMzQiLCJ1c2VySWQiOjE5LCJzdWIiOiIxMjM0IiwiZXhwIjoxNzUwMTQzNzMxfQ.wEpT42ZMp0R-ZbLhzJCAnePcy9LRpovHCcRKu0s63lA';
+  const token = ADMIN_TOKEN.token;
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
   });

@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import { OrderDTO } from '../dtos/order/order.dto';
 import { OrderResponse } from '../responses/order/order.response';
 import { ApiResponse } from '../responses/api.response';
+import { ADMIN_TOKEN } from '../constans';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +59,7 @@ export class OrderService {
   }
 
   getAllOrdersDashBoard() {
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjEyMzQiLCJ1c2VySWQiOjE5LCJzdWIiOiIxMjM0IiwiZXhwIjoxNzUwMDg2ODA1fQ.DtVILFTo2tkQSq8fEq4OGqSn3kJdZuzMqax9bspXDVs';
+    const token = ADMIN_TOKEN.token;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
